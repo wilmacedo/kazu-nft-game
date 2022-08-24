@@ -34,3 +34,9 @@ export const CardContainer = styled.div`
 
   gap: 2.5rem;
 `;
+
+export const HeaderMenu = styled.div`
+  display: flex;
+  flex: 1
+
+`

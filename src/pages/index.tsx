@@ -1,41 +1,26 @@
 import { useEffect } from "react";
-import Card from "../components/Card";
+import { Button } from "../components/Button";
 import { useProviderData } from "../contexts/ProviderData";
-import { ICall } from "../services/eth/types";
 import { Provider } from "../types";
-import { BackgroundImage, CardContainer, Container } from "./styles";
+
+import { BackgroundImage, Container, HeaderMenu } from "./styles";
 
 const Home: React.FC = () => {
-  const { providerData, updateData, setupData } = useProviderData();
+  const { setupData } = useProviderData();
 
   useEffect(() => {
     setupData(Provider.ETHEREUM);
     setupData(Provider.TRON);
   }, []);
 
-  const changeCall = (provider: string, call: ICall) => {
-    updateData((prevData) => ({
-      ...prevData,
-      [provider]: { ...prevData[provider], call },
-    }));
-  };
-
   return (
     <Container>
+      <HeaderMenu>
+        <Button onClick={() => console.log("func")}>Home</Button>
+        <Button onClick={() => console.log("func")}>My kazus</Button>
+        <Button onClick={() => console.log("func")}>connect wallet</Button>
+      </HeaderMenu>
       <BackgroundImage />
-
-      <CardContainer>
-        {Object.keys(providerData).map((provider, index) => (
-          <Card
-            key={index}
-            title={providerData[provider].name}
-            status={providerData[provider].status}
-            providerData={providerData[provider].data}
-            call={providerData[provider].call}
-            changeCall={(call) => changeCall(provider, call)}
-          />
-        ))}
-      </CardContainer>
     </Container>
   );
 };
