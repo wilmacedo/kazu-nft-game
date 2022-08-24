@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { Button } from "../components/Button";
+import HeaderMenu from "../components/HeaderMenu";
 import { useProviderData } from "../contexts/ProviderData";
 import { Provider } from "../types";
 
-import { BackgroundImage, Container, HeaderMenu } from "./styles";
+import { BackgroundImage, Container } from "./styles";
 
 const Home: React.FC = () => {
   const { setupData } = useProviderData();
@@ -15,11 +15,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <HeaderMenu>
-        <Button onClick={() => console.log("func")}>Home</Button>
-        <Button onClick={() => console.log("func")}>My kazus</Button>
-        <Button onClick={() => console.log("func")}>connect wallet</Button>
-      </HeaderMenu>
+      <HeaderMenu />
       <BackgroundImage />
     </Container>
   );
