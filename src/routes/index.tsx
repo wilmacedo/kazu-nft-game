@@ -1,16 +1,21 @@
-import { Route, Routes as ReactRoutes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "../pages/Home";
 import HowWork from "../pages/HowWork";
+import Layout from "../pages/Layout";
 
-const Routes: React.FC = () => {
+const AppRoutes: React.FC = () => {
   return (
-    <ReactRoutes>
-      <Route path="/" element={<Home />} />
-      <Route path="/how-it-works" element={<HowWork />} />
-      <Route path="/*" element={<h1>404</h1>} />
-    </ReactRoutes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+          <Route path="how-it-works" element={<HowWork />} />
+          <Route path="*" element={<h1>404</h1>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
-export default Routes;
+export default AppRoutes;
