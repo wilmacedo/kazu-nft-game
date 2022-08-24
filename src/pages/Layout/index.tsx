@@ -2,14 +2,18 @@ import HeaderMenu from "../../components/HeaderMenu";
 import { useEffect } from "react";
 
 import { BackgroundImage, Container } from "./styles";
+import { Outlet } from "react-router-dom";
 
-const Home: React.FC = () => {
+const Layout: React.FC = () => {
+  useEffect(() => {}, []);
+
   return (
     <Container>
       <HeaderMenu />
       <BackgroundImage />
+      <Outlet />
     </Container>
   );
 };
 
-export default Home;
+export default Layout;
