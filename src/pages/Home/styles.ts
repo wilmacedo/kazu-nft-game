@@ -1,3 +1,4 @@
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -7,30 +8,41 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const BackgroundImage = styled.div`
-  height: 100vh;
-  width: 100vw;
-
-  position: absolute;
-
-  background-image: url("https://klever.finance/wp-content/uploads/2021/09/Blockchain_Testnet.jpg");
-  background-repeat: no-repeat;
-  background-position: 90% 10%;
-
-  filter: blur(5px);
-  opacity: 0.35;
+export const ContentContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 24px;
 `;
 
-export const CardContainer = styled.div`
-  padding: 8.5rem 0;
-
+export const TabChooser = styled.div`
   display: flex;
-  position: inherit;
-
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
 
-  gap: 2.5rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  
+  height: 40px;
+  width: 400px;
+
+  color: white;
+`;
+
+export const Tab = styled.div`
+  display: flex;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${(props) => props.theme.primary};
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) =>
+      transparentize(0.65, darken(0.05, props.theme.primary))};
+  }
 `;
