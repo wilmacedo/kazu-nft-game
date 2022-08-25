@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 
 import { Container as DefaultCard } from "../../components/Card/styles";
 
-interface IItem {
+interface IBattleKazuCard {
   selected: boolean;
 }
 interface IFlipContainer {
@@ -120,7 +120,7 @@ export const Back = styled.div`
   z-index: 2;  
 
 `
-export const ItemCard = styled.div<IItem>`
+export const BattleKazuCard = styled.div<IBattleKazuCard>`
   padding: 0.5rem 1.25rem;
 
   width: fit-content;

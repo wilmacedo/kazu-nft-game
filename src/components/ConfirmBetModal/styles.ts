@@ -12,7 +12,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: ${(props) => props.theme.blur.black};
+  background-color: rgba(17, 25, 40, 0.75);
 `;
 
 export const Card = styled.div`
