@@ -52,6 +52,7 @@ export const KazuCard = styled.div<IKazuCard>`
   justify-content: center;
 
   flex-direction: column;
+  user-select: none;
  
   margin: 0.2rem;
   width: 100px;

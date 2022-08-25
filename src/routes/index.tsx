@@ -11,22 +11,23 @@ import Home from "../pages/Home";
 import HowWork from "../pages/HowWork";
 import Battle from "../pages/Battle";
 import Marketplace from "../pages/Marketplace";
+import Store from "../pages/Store";
 import { useProviderData } from "../contexts/ProviderData";
-interface IProvider {
-  children: React.ReactNode;
-}
 
 const AppRoutes: React.FC = () => {
   const provider = useProviderData();
 
   return (
-    <Routes>
-      <Route path="/" element={<HowWork />} />
-      <Route path="/battle" element={<Home />} />
-      <Route path="/battle/accept" element={<Battle />} />
-      <Route path="/marketplace" element={<Marketplace />} />
-      <Route path="*" element={<h1>404</h1>} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HowWork />} />
+        <Route path="/battle" element={<Home />} />
+        <Route path="/battle/accept" element={<Battle />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
