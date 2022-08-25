@@ -1,3 +1,4 @@
+
 import { Container, ContentContainer, KazuCircle, KazuList, KazuListContainer, KLVWager, StartBattleButton, StartBattleContainer, Tab, TabChooser, TicketCounter } from "./styles";
 import { useState, useEffect } from "react";
 
