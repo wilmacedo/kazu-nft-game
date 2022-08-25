@@ -43,8 +43,8 @@ export const Button = styled.div<IButton>`
 `;
   
 export const H2 = styled.h2`
-color: #FFF
+color: ${(props) => props.theme.white}
 `
 export const H1 = styled.h1`
-color: #FFF
+color: ${(props) => props.theme.white}
 `

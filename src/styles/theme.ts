@@ -1,7 +1,7 @@
 const theme = {
   background: "#10111d",
   primary: "rgb(182 75 220)",
-  white: "#fff",
+  white: "#FFF",
 
   blur: {
     black: "rgba(17, 25, 40, 0.5)",
