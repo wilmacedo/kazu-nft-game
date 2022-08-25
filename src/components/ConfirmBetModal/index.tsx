@@ -8,14 +8,20 @@ import {
   Row,
   Title,
   Button,
+  XButton,
 } from "./styles";
 
-const ConfirmBetModal: React.FC = () => {
+interface IConfirmBetModal {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ConfirmBetModal: React.FC<IConfirmBetModal> = ({ setOpen }) => {
   return (
     <Container>
       <Card>
         <Title>
           <span>Confirm Battle</span>
+          <XButton onClick={() => setOpen(false)}>ⓧ</XButton>
         </Title>
         <Divider />
         <Body>

@@ -1,21 +1,20 @@
 import { useState } from "react";
-import { Kazoo1 } from "../../assets";
+import { Kazu1 } from "../../assets";
+import ConfirmBetModal from "../../components/ConfirmBetModal";
 import Layout from "../Layout";
 import {
   Card,
   Container,
   H1,
-  ItemCard,
-  StartCard,
-  CardList,
-  Button,
+  KazuCard,
+  KazuList,
   StartButton,
-  OptionButton,
-  ContentButton,
 } from "./styles";
 
 const Home: React.FC = () => {
   const cards = new Array(9).fill(0);
+
+  const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState(0);
 
   const handleCard = (index: number) => {
@@ -27,27 +26,25 @@ const Home: React.FC = () => {
       <Container>
         <Card>
           <H1>Select your Tazo</H1>
-          <CardList>
+          <KazuList>
             {cards.map((_, index) => (
-              <ItemCard
+              <KazuCard
                 key={index}
                 onClick={() => handleCard(index)}
                 selected={selected === index}
               >
-                <img src={Kazoo1} alt="Whale" />
-              </ItemCard>
+                <img src={Kazu1} alt="Whale" />
+              </KazuCard>
             ))}
-          </CardList>
+          </KazuList>
         </Card>
-        <ContentButton>
-          <StartButton>
-            <span>Start</span>
-          </StartButton>
-          <OptionButton>
-            {/* <img src={ArrowDown} alt="Arrow down" /> */}
-            1TK
-          </OptionButton>
-        </ContentButton>
+        <StartButton onClick={() => setModalOpen(true)}>
+          <span>Start Battle</span>
+        </StartButton>
+
+        {modalOpen && (
+          <ConfirmBetModal setOpen={setModalOpen} />
+        )}
       </Container>
     </Layout>
   );

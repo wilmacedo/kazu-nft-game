@@ -1,12 +1,11 @@
-import { lighten } from "polished";
+import { lighten, transparentize, darken } from "polished";
 import styled, { css } from "styled-components";
 
 import { Container as DefaultCard } from "../../components/Card/styles";
-import { Button as DefaultButton } from '../../components/Button';
+import { Button as DefaultButton } from "../../components/Button";
 interface IItem {
   selected: boolean;
 }
-
 
 export const Button = styled(DefaultButton)`
   margin: 1rem 0;
@@ -25,12 +24,12 @@ export const Container = styled.div`
 `;
 
 export const Card = styled(DefaultCard)`
-  padding: 3rem;
-
+  display: flex;
   flex-wrap: wrap;
 
+  padding: 3rem;
+
   color: ${(props) => props.theme.white};
-  display: flex;
 `;
 
 export const StartCard = styled(DefaultCard)`
@@ -41,13 +40,13 @@ export const StartCard = styled(DefaultCard)`
   color: ${(props) => props.theme.white};
 `;
 
-export const CardList = styled.div`
-display: flex;
-flex-wrap: wrap;
+export const KazuList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
-`
-
-export const ItemCard = styled.div<IItem>`
+export const KazuCard = styled.div<IItem>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,40 +84,31 @@ export const ItemCard = styled.div<IItem>`
 `;
 
 export const H1 = styled.h1`
-margin: 10px 0;
-display: flex;
-justify-content: center;
-`
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+`;
 
-export const ContentButton = styled.div` 
-width: 100%;
-position: relative;
-display: flex;
-
-flex-direction: row;
-align-items: center;
-justify-content: center;
-
-gap: 0.1rem !important;
-`
 export const StartButton = styled(DefaultButton)`
-  margin: 1rem 0 !important;
-  width: 10rem;
+  margin: 2rem 0;
+  width: 15rem;
 
-  border-radius: 0px;
-  border-top-left-radius: 1rem !important;
-  border-bottom-left-radius: 1rem !important;
+  border-radius: 1rem;
 `;
 
 export const OptionButton = styled(DefaultButton)`
   padding: 0;
-  
+
   height: 3.2rem;
   width: 4rem;
   border-radius: 0px;
-  border-top-right-radius: 1rem ;
-  border-bottom-right-radius: 1rem ;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 
+  &:hover {
+    background-color: ${(props) =>
+      transparentize(0.75, darken(0.05, props.theme.primary))};
+  }
   img {
     height: 0.6rem;
     width: auto;

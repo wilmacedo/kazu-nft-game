@@ -1,5 +1,5 @@
 import { Button as DefaultButton } from "../Button";
-import { darken, transparentize } from "polished";
+import { darken, lighten, transparentize } from "polished";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -22,7 +22,7 @@ export const Card = styled.div`
 
   flex-direction: column;
 
-  background: ${(props) => props.theme.blur.black};
+  background: ${(props) => props.theme.black};
   border-radius: 0.6875rem;
   border: 1px solid ${(props) => props.theme.blur.white};
 `;
@@ -42,6 +42,17 @@ export const Title = styled.div`
   }
 `;
 
+export const XButton = styled.span`
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s ease;
+  
+  &:hover {
+    color: ${(props) => lighten(0.5, props.theme.blur.white)};
+  }
+`;
+
+
 export const Body = styled.div`
   padding: 1rem;
 
@@ -56,6 +67,7 @@ export const Row = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 0.5rem;
+  font-weight: 400;
 
   span {
     color: ${(props) => transparentize(0.15, props.theme.white)};
