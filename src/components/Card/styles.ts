@@ -13,7 +13,7 @@ interface IRow {
 }
 
 export const Container = styled.div`
-  width: 22rem;
+  width: 30rem;
 
   display: flex;
 
