@@ -12,6 +12,7 @@ import {
 
 import { KLVIcon as KLV } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import Logo from "../Logo";
 
 interface IHeaderMenu {
   isAuthenticated?: boolean;
@@ -53,7 +54,7 @@ const Header: React.FC<IHeaderMenu> = () => {
 
   return (
     <Container>
-      <span>Logo</span>
+      <Logo />
       <Menu disabled={!provider.isConnected()} />
       {provider.isConnected() === true ? (
         <AccountContainer>
