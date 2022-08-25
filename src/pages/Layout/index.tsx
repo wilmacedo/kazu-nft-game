@@ -9,7 +9,7 @@ const Layout: React.FC = () => {
 
   return (
     <Container>
-      <HeaderMenu />
+      <HeaderMenu isAuthenticated={true} />
       <BackgroundImage />
       <Outlet />
     </Container>
