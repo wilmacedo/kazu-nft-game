@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Kazu1 } from "../../assets";
 import ConfirmBetModal from "../../components/ConfirmBetModal";
+import Divider from "../../components/Divider";
 import Layout from "../Layout";
 import {
   Card,
@@ -14,18 +15,22 @@ import {
 const Home: React.FC = () => {
   const cards = new Array(9).fill(0);
 
+  const [selected, setSelected] = useState(-1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selected, setSelected] = useState(0);
+  
+  const handleStart = () => {
+    if (selected !== -1) setModalOpen(true);
+  };
 
   const handleCard = (index: number) => {
-    setSelected(index);
+    setSelected(index !== selected ? index : -1);
   };
 
   return (
     <Layout>
       <Container>
         <Card>
-          <H1>Select your Tazo</H1>
+          <H1>Select your Kazu</H1>
           <KazuList>
             {cards.map((_, index) => (
               <KazuCard
@@ -33,12 +38,14 @@ const Home: React.FC = () => {
                 onClick={() => handleCard(index)}
                 selected={selected === index}
               >
-                <img src={Kazu1} alt="Whale" />
+                <img src={Kazu1} alt="Kazu" />
+                <Divider />
+                <p>#{(index + 1)}{(index + 1)}{(index + 1)}{(index + 1)}</p>
               </KazuCard>
             ))}
           </KazuList>
         </Card>
-        <StartButton onClick={() => setModalOpen(true)}>
+        <StartButton onClick={handleStart} disabled={selected === -1}>
           <span>Start Battle</span>
         </StartButton>
 

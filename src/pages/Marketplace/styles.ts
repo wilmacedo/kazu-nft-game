@@ -3,8 +3,10 @@ import styled, { css } from "styled-components";
 
 import { Container as DefaultCard } from "../../components/Card/styles";
 import { Button as DefaultButton } from "../../components/Button";
+
 interface IKazuCard {
   selected: boolean;
+  available: boolean;
 }
 
 export const Button = styled(DefaultButton)`
@@ -13,7 +15,7 @@ export const Button = styled(DefaultButton)`
 `;
 
 export const Container = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
 
   display: flex;
 
@@ -27,7 +29,7 @@ export const Card = styled(DefaultCard)`
   display: flex;
   flex-wrap: wrap;
 
-  padding: 2rem 3rem;
+  padding: 3rem;
 
   color: ${(props) => props.theme.white};
 `;
@@ -46,13 +48,13 @@ export const KazuList = styled.div`
   justify-content: center;
 `;
 
-export const KazuCard = styled.div<IKazuCard>`
+export const KazuMarketCard = styled.div<IKazuCard>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   flex-direction: column;
- 
+
   margin: 0.2rem;
   width: 100px;
 
@@ -61,16 +63,12 @@ export const KazuCard = styled.div<IKazuCard>`
 
   transition: 0.3s ease;
 
-  cursor: pointer;
-
   p {
     font-weight: 300;
-    margin: 0.5rem 0;
-  }
+    margin: 0.7rem 0;
+  } 
 
-  span {
-    margin-bottom: 0.5rem;
-  }
+  cursor: ${(props) => props.available ? 'pointer' : 'not-allowed'};
 
   ${(props) =>
     props.selected &&
@@ -95,34 +93,24 @@ export const KazuCard = styled.div<IKazuCard>`
   }
 `;
 
-export const H1 = styled.h1`
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-`;
+export const BuyKazuButton = styled(DefaultButton)`
+  padding: 1rem 0;
+  width: 90%;
 
-export const StartButton = styled(DefaultButton)`
-  margin: 2rem 0;
-  width: 15rem;
+  cursor: not-allowed;
+  user-select: none;
+
+  span {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
 
   border-radius: 1rem;
 `;
 
-export const OptionButton = styled(DefaultButton)`
-  padding: 0;
-
-  height: 3.2rem;
-  width: 4rem;
-  border-radius: 0px;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-
-  &:hover {
-    background-color: ${(props) =>
-      transparentize(0.75, darken(0.05, props.theme.primary))};
-  }
-  img {
-    height: 0.6rem;
-    width: auto;
-  }
+export const H1 = styled.h1`
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
 `;
