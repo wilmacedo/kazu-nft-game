@@ -1,6 +1,6 @@
-import React from "react";
-import Layout from "../Layout";
 import { Card, Container, StepsContainer } from "./styles";
+import Layout from "../Layout";
+import React from "react";
 
 const HowWork: React.FC = () => {
   return (
