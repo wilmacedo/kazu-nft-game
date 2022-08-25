@@ -5,12 +5,12 @@ export const Container = styled.div`
 `;
 
 export const BackgroundImage = styled.div`
-  height: 100%;
+  height: 90%;
   width: 100vw;
 
   position: absolute;
 
-  background-image: url("https://klever.finance/wp-content/uploads/2021/09/Blockchain_Testnet.jpg");
+  /* background-image: url("https://klever.finance/wp-content/uploads/2021/09/Blockchain_Testnet.jpg"); */
   /* background-image: url("https://64.media.tumblr.com/f30efbba2ff16e035ddcf50e0ed34c1b/tumblr_inline_nre1s7Y3fJ1ro7qra_640.jpg"); */
   background-repeat: no-repeat;
   background-position: 90% 10%;
