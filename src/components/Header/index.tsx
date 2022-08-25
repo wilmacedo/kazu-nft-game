@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useProviderData } from "../../contexts/ProviderData";
 import { shortenAddressSuffix } from "../../utils";
 import Menu from "../Menu";
@@ -51,6 +51,12 @@ const Header: React.FC<IHeaderMenu> = () => {
       }
     })();
   };
+
+  useEffect(() => {
+    if (!provider.isConnected() && location.pathname !== "/") {
+      navigate("/");
+    }
+  }, [provider, location.pathname]);
 
   return (
     <Container>
