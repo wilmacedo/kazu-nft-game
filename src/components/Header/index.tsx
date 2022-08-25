@@ -8,6 +8,7 @@ import {
   AccountContainer,
   AddressContainer,
   KlvIcon,
+  LogoContainer,
 } from "./styles";
 
 import { KLVIcon as KLV } from "../../assets";
@@ -54,7 +55,7 @@ const Header: React.FC<IHeaderMenu> = () => {
 
   return (
     <Container>
-      <Logo />
+      <LogoContainer><Logo /></LogoContainer>
       <Menu disabled={!provider.isConnected()} />
       {provider.isConnected() === true ? (
         <AccountContainer>
