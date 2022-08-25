@@ -7,7 +7,8 @@ interface IButton {
 
 export const Button = styled.div<IButton>`
   width: 100%;
-
+  border-radius: 25px;
+  margin: 5px;
   padding: 1rem 1.5rem;
 
   display: flex;
