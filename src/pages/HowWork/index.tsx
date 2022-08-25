@@ -1,24 +1,19 @@
-import React, { Fragment } from "react";
-import { Container, H1, H2, Ul } from "./styles";
+import React from "react";
+import Layout from "../Layout";
+import { Card, Container } from "./styles";
 
 const HowWork: React.FC = () => {
   return (
-    <Fragment>
+    <Layout>
       <Container>
-        <H1>How it works</H1>
-        <Ul>
-          <li>
-            <H2>How it works</H2>
-          </li>
-          <li>
-            <H2>How it works</H2>
-          </li>
-          <li>
-            <H2>How it works</H2>
-          </li>
-        </Ul>
+        <Card>
+          <h1>How this Work</h1>
+          <span>...</span>
+          <span>...</span>
+          <span>...</span>
+        </Card>
       </Container>
-    </Fragment>
+    </Layout>
   );
 };
 

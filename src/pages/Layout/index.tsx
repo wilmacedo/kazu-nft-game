@@ -1,17 +1,17 @@
-import HeaderMenu from "../../components/HeaderMenu";
-import { useEffect } from "react";
+import Header from "../../components/Header";
 
 import { BackgroundImage, Container } from "./styles";
-import { Outlet } from "react-router-dom";
 
-const Layout: React.FC = () => {
-  useEffect(() => {}, []);
+interface IProps {
+  children: React.ReactNode;
+}
 
+const Layout: React.FC<IProps> = ({ children }) => {
   return (
     <Container>
-      <HeaderMenu isAuthenticated={true} />
       <BackgroundImage />
-      <Outlet />
+      <Header />
+      {children}
     </Container>
   );
 };
