@@ -21,12 +21,24 @@ interface IProviderData {
   setupData: (provider: Provider) => void;
   providerData: IData;
   updateData: React.Dispatch<React.SetStateAction<IData>>;
+  isAuthenticated: boolean;
+  setIsAutheticated: Function;
+  tickets: number;
+  setTickets: Function;
+  balance: number;
+  setBalence: Function;
+  address: string;
+  setAddress: Function;
 }
 
 const DataContext = createContext({} as IProviderData);
 
 const DataProvider: React.FC<Props> = ({ children }) => {
   const [data, setData] = useState<IData>({});
+  const [isAuthenticated, setIsAutheticated] = useState<boolean>(false);
+  const [tickets, setTickets] = useState<number>(0);
+  const [balance, setBalence] = useState<number>(0);
+  const [address, setAddress] = useState<string>("");
 
   const setupData = (provider: Provider) => {
     let status = ConnectionStatus.WAITING;
@@ -52,6 +64,14 @@ const DataProvider: React.FC<Props> = ({ children }) => {
     setupData,
     providerData: data,
     updateData: setData,
+    isAuthenticated,
+    setIsAutheticated,
+    tickets,
+    setTickets,
+    balance,
+    setBalence,
+    address,
+    setAddress,
   };
 
   return <DataContext.Provider value={values}>{children}</DataContext.Provider>;

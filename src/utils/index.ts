@@ -29,5 +29,8 @@ const stringToHex = (data: string) => {
 
   return "0x" + result;
 };
+const getAddress = (address:string, quantity = 15) => {
+	if (address?.length > 0) return `${address?.substr(0, quantity)}...${address?.slice(-3)}`
+}
 
-export { capitalize, shortenAddress, hexToString, stringToHex };
+export { capitalize, shortenAddress, hexToString, stringToHex,getAddress };
