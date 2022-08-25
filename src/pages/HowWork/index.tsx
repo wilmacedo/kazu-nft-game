@@ -3,9 +3,12 @@ import Layout from "../Layout";
 import React from "react";
 
 const HowWork: React.FC = () => {
+  const imageUrl = 'https://64.media.tumblr.com/6cca6ea31f57f3d1211dc2fc4da574fb/b9ee7c6fc226c9f5-00/s500x750/13c91c89ab8a816aa27911b563a2d08f67408fdc.gifv';
+
   return (
     <Layout>
       <Container>
+        <img src={imageUrl} />
         <Card>
           <h1>How it Works</h1>
           <StepsContainer>
