@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProviderData } from "../../contexts/ProviderData";
 import { getAddress } from "../../utils";
 import { Button } from "../Button";
@@ -28,6 +29,8 @@ const HeaderMenu: React.FC<IHeaderMenu> = () => {
     setAddress,
   } = useProviderData();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (isAuthenticated) {
       setBalence(71626);
@@ -35,6 +38,7 @@ const HeaderMenu: React.FC<IHeaderMenu> = () => {
       setAddress(
         "klv1kmr8ckqaj5rnn28en80n2h5kn7ney5vve5v3h0sur882udrhs5lqmq2vk7"
       );
+      navigate("/home");
     }
   }, [isAuthenticated]);
 
