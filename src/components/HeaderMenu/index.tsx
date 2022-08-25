@@ -28,23 +28,39 @@ const HeaderMenu: React.FC<IHeaderMenu> = () => {
     setAddress,
   } = useProviderData();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      setBalence(71626);
-      setTickets(34);
-      setAddress(
-        "klv1kmr8ckqaj5rnn28en80n2h5kn7ney5vve5v3h0sur882udrhs5lqmq2vk7"
-      );
+  const handleAuth = () => {
+    const provider = window.kleverWeb;
+    if (!provider) {
+      console.info("Klever Web is not available");
+      return;
     }
-  }, [isAuthenticated]);
+
+    (async () => {
+      try {
+        const address = await provider.enable();
+        if (!address) {
+          console.error("Cannot retrive address");
+          return;
+        }
+
+        const balance = await provider.getBalance();
+
+        setAddress(address);
+        setBalence(balance || 0);
+        setTickets(3);
+
+        setIsAutheticated(true);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  };
 
   return (
     <Container>
       {!isAuthenticated ? (
         <ContainerButton>
-          <Button onClick={() => setIsAutheticated(true)}>
-            connect wallet
-          </Button>
+          <Button onClick={handleAuth}>Connect wallet</Button>
         </ContainerButton>
       ) : (
         <ContainerHeader>
@@ -60,7 +76,9 @@ const HeaderMenu: React.FC<IHeaderMenu> = () => {
             </SLink>
           </div>
           <ConteinerTickets>Tickets: {tickets}</ConteinerTickets>
-          <ConteinerTickets>Balance: {balance}</ConteinerTickets>
+          <ConteinerTickets>
+            Balance: {(balance / 10 ** 6).toLocaleString()}
+          </ConteinerTickets>
           <ConteinerTickets>Address:{getAddress(address, 10)}</ConteinerTickets>
           <DivLink>
             <SLink to="/my-kazoos">MY Kazoos</SLink>

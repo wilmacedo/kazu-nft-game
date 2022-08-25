@@ -1,19 +1,23 @@
-import { Container, ContentContainer, KazuCircle, KazuList, KazuListContainer, Tab, TabChooser } from "./styles";
+import {
+  Container,
+  ContentContainer,
+  KazuCircle,
+  KazuList,
+  KazuListContainer,
+  Tab,
+  TabChooser,
+} from "./styles";
 import { useState, useEffect } from "react";
 
 const Home: React.FC = () => {
-
   const [currentTab, setCurrentTab] = useState(0); // 0: Battle, 1: Store
 
-  const [userKazus, setUserKazus] = useState([1,2,3,4,5,6,7,8,9,10])
+  const [userKazus, setUserKazus] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   const [selectedKazu, setSelectedKazu] = useState(-1);
 
   const handleKazuClick = (index: number) => {
     setSelectedKazu(index !== selectedKazu ? index : -1);
   };
-
-  useEffect(() => {
-  }, []);
 
   return (
     <Container>
@@ -25,13 +29,13 @@ const Home: React.FC = () => {
 
         <KazuListContainer>
           <KazuList>
-          {userKazus.map((item, index) => (
-            <KazuCircle 
-              key={String(index)} 
-              onClick={() => handleKazuClick(index)}
-              isSelected={index === selectedKazu}
-            />
-          ))}
+            {userKazus.map((item, index) => (
+              <KazuCircle
+                key={String(index)}
+                onClick={() => handleKazuClick(index)}
+                isSelected={index === selectedKazu}
+              />
+            ))}
           </KazuList>
         </KazuListContainer>
       </ContentContainer>
