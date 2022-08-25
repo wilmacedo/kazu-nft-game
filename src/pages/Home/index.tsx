@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Kazu1 } from "../../assets";
+import { Kazu1, Kazu2, Kazu3, Kazu4 } from "../../assets";
 import ConfirmBetModal from "../../components/ConfirmBetModal";
 import BattleAccepted from "../../components/BattleAccepted";
 import Divider from "../../components/Divider";
@@ -8,9 +8,19 @@ import { Card, Container, H1, KazuCard, KazuList, StartButton } from "./styles";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 
+interface INft {
+  id: number;
+  img: string;
+}
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const cards = new Array(9).fill(0);
+  const cards: INft[] = [
+    { id: 1234, img: Kazu1 },
+    { id: 9843, img: Kazu2 },
+    { id: 2487, img: Kazu3 },
+    { id: 9866, img: Kazu4 },
+  ];
 
   const [selected, setSelected] = useState(-1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,8 +31,8 @@ const Home: React.FC = () => {
     if (selected !== -1) setModalOpen(true);
   };
 
-  const handleCard = (index: number) => {
-    setSelected(index !== selected ? index : -1);
+  const handleCard = (id: number) => {
+    setSelected(id !== selected ? id : -1);
   };
 
   const handlerModalBattleAccept = () => {
@@ -39,19 +49,23 @@ const Home: React.FC = () => {
     }, 7000);
   };
 
+  const nftSelected = (id: number) => {
+    return cards.find((nft: INft) => id === nft.id);
+  };
+
   return (
     <Layout>
       <Container>
         <Card>
           <H1>Select your Kazu</H1>
           <KazuList>
-            {cards.map((_, index) => (
+            {cards.map((nft: INft, index) => (
               <KazuCard
                 key={index}
-                onClick={() => handleCard(index)}
-                selected={selected === index}
+                onClick={() => handleCard(nft.id)}
+                selected={selected === nft.id}
               >
-                <img src={Kazu1} alt="Kazu" />
+                <img src={nft.img} alt="Kazu" />
                 <Divider />
                 <p>
                   #{index + 1}
@@ -73,7 +87,13 @@ const Home: React.FC = () => {
           />
         )}
         {loading && <Loading />}
-        {modalBattleAcceptedOpen && <BattleAccepted setOpen={setModalOpen} />}
+        {modalBattleAcceptedOpen && (
+          <BattleAccepted
+            nftSelected={nftSelected}
+            selected={selected}
+            setOpen={setModalOpen}
+          />
+        )}
       </Container>
     </Layout>
   );
