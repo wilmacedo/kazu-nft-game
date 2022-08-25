@@ -13,9 +13,13 @@ import {
 
 interface IConfirmBetModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onConfirm: Function;
 }
 
-const ConfirmBetModal: React.FC<IConfirmBetModal> = ({ setOpen }) => {
+const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
+  setOpen,
+  onConfirm,
+}) => {
   return (
     <Container>
       <Card>
@@ -36,7 +40,7 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({ setOpen }) => {
         </Body>
         <Divider />
         <Footer>
-          <Button>
+          <Button onClick={() => onConfirm()}>
             <span>Confirm</span>
           </Button>
         </Footer>
