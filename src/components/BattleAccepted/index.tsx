@@ -10,12 +10,36 @@ import {
   Button,
   XButton,
 } from "./styles";
+import { Kazu1, Kazu2, Kazu3, Kazu4 } from "../../assets";
 
 interface IConfirmBetModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selected: number;
+  nftSelected: Function;
+}
+interface INft {
+  id: number;
+  img: string;
 }
 
-const BattleAccepted: React.FC<IConfirmBetModal> = ({ setOpen }) => {
+const BattleAccepted: React.FC<IConfirmBetModal> = ({
+  setOpen,
+  nftSelected,
+  selected,
+}) => {
+  const cards: INft[] = [
+    { id: 1234, img: Kazu1 },
+    { id: 9843, img: Kazu2 },
+    { id: 2487, img: Kazu3 },
+    { id: 9866, img: Kazu4 },
+  ];
+  const nft = nftSelected(selected);
+  const randomNFt = () => {
+    const r = Math.random() * (5 - 1) + 1;
+    console.log(r);
+
+    return cards[Number(Number(r).toFixed(0))];
+  };
   return (
     <Container>
       <Card>
@@ -26,18 +50,10 @@ const BattleAccepted: React.FC<IConfirmBetModal> = ({ setOpen }) => {
         <Body>
           <Row>
             <p>Player 1</p>
-            <img
-              width="200"
-              src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
-              alt=""
-            />
+            <img width="200" src={nft.img} alt="" />
           </Row>
           <Row>
-            <img
-              width="200"
-              src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
-              alt=""
-            />
+            <img width="200" src={randomNFt()?.img} alt="" />
             <p>Player 2</p>
           </Row>
         </Body>
