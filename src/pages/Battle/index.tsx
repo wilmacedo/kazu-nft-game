@@ -1,59 +1,78 @@
-import React, { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
+import Layout from "../Layout";
 import {
+  CardConteiner,
   Container,
-  ContentContainer,
-  KazuCircle,
-  ValueContainer,
-  ValueContentContainer,
+  ScoreboardContainer,
+  FlipContainer,
+  Flipper,
+  Front,
+  Back,
 } from "./styles";
+import hand from "../../assets/hand.png";
 
-interface Inft {
+interface Infts {
   img: string;
-  value: number;
   hash: number;
 }
-interface Iplayer {
-  address: string;
-  nft: Inft;
-}
-const BattleAccepted: React.FC = () => {
-  const [battleAccepted, setBattleAccepted] = useState<boolean>(true);
-  const [value] = useState<number>(400);
-  const players = [
-    {
-      address: "player 1",
-      nft: {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI0ffgr7QHB0aruZO-0030OwlMSsVTFFBeXQ&usqp=CAU",
-        value: 200,
-        hash: 2867,
-      },
-    },
-    {
-      address: "player 2",
-      nft: {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI0ffgr7QHB0aruZO-0030OwlMSsVTFFBeXQ&usqp=CAU",
-        value: 150,
-        hash: 7655,
-      },
-    },
-  ];
+
+const Home: React.FC = () => {
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [loss, setLoss] = useState<[Infts]>();
+  const [winer, setWiner] = useState<[Infts]>();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsActive((old) => !old);
+    }, 3000);
+  }, [isActive]);
+
   return (
-    <Container>
-      <ContentContainer>
-        {players.map((player: Iplayer, index) => (
-          <div key={index}>
-            <KazuCircle>
-              <img src={player.nft.img} alt="" />
-            </KazuCircle>
-            <p>{player?.address}</p>
-          </div>
-        ))}
-      </ContentContainer>
-      <ValueContentContainer>
-        <ValueContainer>{value} KLV</ValueContainer>
-      </ValueContentContainer>
-    </Container>
+    <Layout>
+      <Container>
+        <CardConteiner>
+          <ScoreboardContainer>
+            <div>
+              <h1>Loss</h1>
+              <img
+                width={20}
+                src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
+                alt=""
+              />
+            </div>
+
+            <div>
+              <h1>Winer</h1>
+              <img
+                width={20}
+                src="https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png"
+                alt=""
+              />
+            </div>
+          </ScoreboardContainer>
+          <FlipContainer isActive={isActive}>
+            <Flipper>
+              <Front>
+                <img
+                  width="200"
+                  src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
+                  alt=""
+                />
+              </Front>
+              <Back>
+                <img
+                  width="200"
+                  src="https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png"
+                  alt=""
+                />
+              </Back>
+            </Flipper>
+          </FlipContainer>
+        </CardConteiner>
+        <img width={300} src={hand} alt="" />
+      </Container>
+    </Layout>
   );
 };
 
-export default BattleAccepted;
+export default Home;

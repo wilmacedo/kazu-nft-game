@@ -10,6 +10,13 @@ const shortenAddress = (address: string, maxSize = 24) => {
   return address.substring(1, maxSize) + "...";
 };
 
+const shortenAddressSuffix = (address: string, maxSize = 4) => {
+  const prefix = address.substring(0, maxSize);
+  const suffix = address.substring(address.length - maxSize, address.length);
+
+  return prefix + "..." + suffix;
+};
+
 const hexToString = (data: string) => {
   const result = data
     .match(/.{1,2}/g)
@@ -29,8 +36,16 @@ const stringToHex = (data: string) => {
 
   return "0x" + result;
 };
-const getAddress = (address:string, quantity = 15) => {
-	if (address?.length > 0) return `${address?.substr(0, quantity)}...${address?.slice(-3)}`
-}
+const getAddress = (address: string, quantity = 15) => {
+  if (address?.length > 0)
+    return `${address?.substr(0, quantity)}...${address?.slice(-3)}`;
+};
 
-export { capitalize, shortenAddress, hexToString, stringToHex,getAddress };
+export {
+  capitalize,
+  shortenAddress,
+  hexToString,
+  stringToHex,
+  getAddress,
+  shortenAddressSuffix,
+};

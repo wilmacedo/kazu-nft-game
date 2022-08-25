@@ -3,6 +3,8 @@ const theme = {
   primary: "rgb(182 75 220)",
   white: "#FFF",
 
+  gray: "rgba(100, 102, 147, 1)",
+
   blur: {
     black: "rgba(17, 25, 40, 0.5)",
     white: "rgba(255, 255, 255, 0.18)",

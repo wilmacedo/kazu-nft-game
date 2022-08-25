@@ -1,57 +1,155 @@
-import styled from "styled-components";
+import { lighten } from "polished";
+import styled, { css } from "styled-components";
+
+import { Container as DefaultCard } from "../../components/Card/styles";
+
+interface IItem {
+  selected: boolean;
+}
+interface IFlipContainer {
+  isActive: boolean;
+}
 
 export const Container = styled.div`
-  width: 95%;
-  height: 90%;
-  margin: 26px;
-`;
+  margin-top: 2rem;
 
-export const ContentContainer = styled.div`
   display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 24px;
-  background-image: url('https://img.freepik.com/vetores-gratis/parede-brilhante-versus-fundo-da-tela_1017-32315.jpg?w=2000');
-  background-repeat: no-repeat;
-  opacity: 1;
-  background-position: center;
-`;
-export const ValueContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 24px;
-  font-size: 30px;
-  background-color: #14152c;
-  width: 400px;
-  border-radius: 100px;
-  margin: 10px;
-`;
-export const ValueContentContainer = styled.div`
-  display: flex;
+
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-export const KazuCircle = styled.div`
-  display: flex;
+export const ScoreboardContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 10rem;
+    height: 20rem;
+`;
 
-  width: 160px;
-  height: 160px;
-  border-radius: 80px;
+export const CardConteiner = styled(DefaultCard)`
+  padding: 1rem;
+  width: 50rem;
+  height: 20rem;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  h1{
+    font-size: 16px;
+  }
+
+
+  color: ${(props) => props.theme.white};
+  /* .flip-container { perspective: 1000; }
+  /* vira os containers frente e verso quando o mouse passa em cima */
+  /* .flip-container.active .flipper, .flip-container.hover .flipper {  		
+    transform: rotateY(180deg);  	
+  }     */
+  /* .flip-container, .front, .back {  	
+    width: 320px;  	
+    height: 480px;
+    padding: 1rem;
+  } */
+
+  /* define a velocidade da transição */
+  /* .flipper {  	
+    transition: 0.6s;  	
+    transform-style: preserve-3d;    	
+    position: relative;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
+      
+  /* esconde o verso durante a animação */
+  /* .front, .back {  	
+    backface-visibility: hidden;    	
+    position: absolute;  	
+    top: 0;  	
+  left: 0;  
+  } */
+      
+  /* frente posicionada sobre o verso */
+  /* .front { z-index: 2;  }     */
+
+  /* verso inicialmente escondido */
+  /* .back { transform: rotateY(180deg); } */
+`;
+
+export const FlipContainer = styled.div<IFlipContainer>`
+  perspective: 1000;
+  width: 320px;  	
+  height: 480px;
+  padding: 1rem;
+  transform: ${(props)=> props.isActive ? 'rotateY(180deg)' : '' };
+  
+`
+export const Flipper = styled.div`
+ transition: 0.6s;  	
+    transform-style: preserve-3d;    	
+    position: relative;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+`
+
+
+export const Front = styled.div`
+  width: 320px;  	
+  height: 480px;
+  padding: 1rem;
+  backface-visibility: hidden;    	
+  position: absolute;  	
+  top: 0;  	
+  left: 0;
+  transform: rotateY(180deg);
+
+`
+
+export const Back = styled.div`
+  width: 320px;  	
+  height: 480px;
+  padding: 1rem;
+  backface-visibility: hidden;    	
+  position: absolute;  	
+  top: 0;  	
+  left: 0;
+  z-index: 2;  
+
+`
+export const ItemCard = styled.div<IItem>`
+  padding: 0.5rem 1.25rem;
+
+  width: fit-content;
+
+  border: 1px solid ${(props) => lighten(0.5, props.theme.blur.black)};
+  border-radius: 0.5rem;
+
+  transition: 0.3s ease;
 
   cursor: pointer;
 
-  margin-right: 40px;
+  ${(props) =>
+    props.selected &&
+    css`
+      border-color: ${(props) => lighten(0.7, props.theme.blur.black)};
+    `};
 
-  background-color: beige;
-  img{
-    width: 160px;
-    height: 160px;
-    border-radius: 80px;
+  ${(props) =>
+    !props.selected &&
+    css`
+      opacity: 0.5;
+    `};
 
+  &:hover {
+    border-color: ${(props) => lighten(0.7, props.theme.blur.black)};
+  }
+
+  img {
+    width: 5.5rem;
+    height: auto;
   }
 `;
