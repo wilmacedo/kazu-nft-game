@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BattleAccepted from "../pages/Battle";
 
 import Home from "../pages/Home";
 import HowWork from "../pages/HowWork";
