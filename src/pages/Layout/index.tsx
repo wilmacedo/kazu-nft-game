@@ -9,7 +9,7 @@ const Layout: React.FC = () => {
 
   return (
     <Container>
-      <HeaderMenu />
+      {/* <HeaderMenu /> */}
       <BackgroundImage />
       <Outlet />
     </Container>
