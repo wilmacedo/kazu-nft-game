@@ -13,15 +13,16 @@ export default createGlobalStyle`
   
   body {
     background-color: ${(props) => props.theme.background};
+    font-family: 'Rubik', sans-serif;
   }
 
   body, input, textarea, button {
-    font: 500 1rem Montserrat, sans-serif;
+    font: 500 1rem Rubik, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    font-family: Montserrat, sans-serif;
+    font-family: Rubik, sans-serif;
   }
 
   h1 {

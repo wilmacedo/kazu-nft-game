@@ -1,41 +1,33 @@
-import { Container, ContentContainer, KazuCircle, KazuList, KazuListContainer, Tab, TabChooser } from "./styles";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Whale } from "../../assets";
+import Layout from "../Layout";
+import { Card, Container, ItemCard } from "./styles";
 
 const Home: React.FC = () => {
+  const cards = new Array(3).fill(0);
+  const [selected, setSelected] = useState(0);
 
-  const [currentTab, setCurrentTab] = useState(0); // 0: Battle, 1: Store
-
-  const [userKazus, setUserKazus] = useState([1,2,3,4,5,6,7,8,9,10])
-  const [selectedKazu, setSelectedKazu] = useState(-1);
-
-  const handleKazuClick = (index: number) => {
-    setSelectedKazu(index !== selectedKazu ? index : -1);
+  const handleCard = (index: number) => {
+    setSelected(index);
   };
 
-  useEffect(() => {
-  }, []);
-
   return (
-    <Container>
-      <ContentContainer>
-        <TabChooser>
-          <Tab isSelected={currentTab === 0}>Battle</Tab>
-          <Tab isSelected={currentTab === 1}>Store</Tab>
-        </TabChooser>
-
-        <KazuListContainer>
-          <KazuList>
-          {userKazus.map((item, index) => (
-            <KazuCircle 
-              key={String(index)} 
-              onClick={() => handleKazuClick(index)}
-              isSelected={index === selectedKazu}
-            />
+    <Layout>
+      <Container>
+        <Card>
+          <h1>Select your Tazo</h1>
+          {cards.map((_, index) => (
+            <ItemCard
+              key={index}
+              onClick={() => handleCard(index)}
+              selected={selected === index}
+            >
+              <img src={Whale} alt="Whale" />
+            </ItemCard>
           ))}
-          </KazuList>
-        </KazuListContainer>
-      </ContentContainer>
-    </Container>
+        </Card>
+      </Container>
+    </Layout>
   );
 };
 

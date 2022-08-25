@@ -21,13 +21,13 @@ interface IProviderData {
   setupData: (provider: Provider) => void;
   providerData: IData;
   updateData: React.Dispatch<React.SetStateAction<IData>>;
-  isAuthenticated: boolean;
-  setIsAutheticated: Function;
-  tickets: number;
+  isConnected: () => boolean;
+  setConnected: Function;
+  getTickets: () => number;
   setTickets: Function;
-  balance: number;
-  setBalence: Function;
-  address: string;
+  getBalance: () => number;
+  setBalance: Function;
+  getAddress: () => string;
   setAddress: Function;
 }
 
@@ -35,10 +35,10 @@ const DataContext = createContext({} as IProviderData);
 
 const DataProvider: React.FC<Props> = ({ children }) => {
   const [data, setData] = useState<IData>({});
-  const [isAuthenticated, setIsAutheticated] = useState<boolean>(false);
-  const [tickets, setTickets] = useState<number>(0);
-  const [balance, setBalence] = useState<number>(0);
-  const [address, setAddress] = useState<string>("");
+  const [connected, setConnected] = useState(false);
+  const [tickets, setTickets] = useState(0);
+  const [balance, setBalance] = useState(0);
+  const [address, setAddress] = useState("");
 
   const setupData = (provider: Provider) => {
     let status = ConnectionStatus.WAITING;
@@ -64,13 +64,13 @@ const DataProvider: React.FC<Props> = ({ children }) => {
     setupData,
     providerData: data,
     updateData: setData,
-    isAuthenticated,
-    setIsAutheticated,
-    tickets,
+    isConnected: () => connected,
+    setConnected: setConnected,
+    getTickets: () => tickets,
     setTickets,
-    balance,
-    setBalence,
-    address,
+    getBalance: () => balance,
+    setBalance,
+    getAddress: () => address,
     setAddress,
   };
 
