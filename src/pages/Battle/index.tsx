@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout";
 import {
   CardConteiner,
@@ -10,69 +10,95 @@ import {
   Back,
 } from "./styles";
 import hand from "../../assets/hand.png";
+import SmallTazuList from "./SmallTazuList";
 
-interface Infts {
-  img: string;
-  hash: number;
+export interface IBattle {
+  status: number;
 }
 
-const Home: React.FC = () => {
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [loss, setLoss] = useState<[Infts]>();
-  const [winer, setWiner] = useState<[Infts]>();
+export interface IRound {
+  userTurn: boolean;
+  kazus: Kazu[];
+  bucketUser: Kazu[];
+  bucketBot: Kazu[];
+  status: number;
+}
+
+interface Kazu {
+  img: string;
+}
+export interface IEngine {
+  userKazu: Kazu,
+  botKazu: Kazu,
+}
+
+const Index: React.FC<IEngine> = ({
+  userKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' },
+  botKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' } }) => {
+  const [battle, setBattle] = useState<IBattle>({
+    status: 1
+  })
+
+  const [round, setRound] = useState<IRound>({
+    userTurn: Boolean(Math.random() < 0.5),
+    kazus: [userKazu, botKazu],
+    bucketUser: [],
+    bucketBot: [],
+    status: 1
+  })
+
+  const [rounds, setRounds] = useState<IRound[]>([])
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsActive((old) => !old);
-    }, 3000);
-  }, [isActive]);
+    if (round.status === 2) {
+      setRounds((all) => [...all, round])
+    }
+  }, [round])
 
-  return (
+  const tapKazus = () => {
+    const bucketUser: Kazu[] = []
+    const bucketBot: Kazu[] = []
+
+    round.kazus.map((kazu: Kazu) => {
+      const win = Boolean(Math.random() < 0.5)
+      if (win) {
+        bucketUser.push(kazu)
+      } else {
+        bucketBot.push(kazu)
+      }
+    })
+    setRound((round) => { ...round, bucketBot, bucketUser, status: 2 })
+}
+
+const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
+  e.preventDefault()
+
+  setRound({})
+}
+
+return (
+  <React.Fragment>
     <Layout>
       <Container>
         <CardConteiner>
           <ScoreboardContainer>
             <div>
               <h1>Loss</h1>
-              <img
-                width={20}
-                src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
-                alt=""
-              />
+              <SmallTazuList images={round.bucketBot} />
             </div>
 
             <div>
               <h1>Winer</h1>
-              <img
-                width={20}
-                src="https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png"
-                alt=""
-              />
+              <SmallTazuList images={round.bucketUser} />
             </div>
+
+            {round.userTurn && <img src={hand} onClick={handleUserClick} />}
           </ScoreboardContainer>
-          <FlipContainer isActive={isActive}>
-            <Flipper>
-              <Front>
-                <img
-                  width="200"
-                  src="https://static1.milkcapmania.co.uk/Img/Tazo/Brazil/Yu-Gi-Oh%21/Magic/300DPI/21-30-Back-Yellow-Joey-Wheeler-2.png"
-                  alt=""
-                />
-              </Front>
-              <Back>
-                <img
-                  width="200"
-                  src="https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png"
-                  alt=""
-                />
-              </Back>
-            </Flipper>
-          </FlipContainer>
         </CardConteiner>
-        <img width={300} src={hand} alt="" />
       </Container>
     </Layout>
-  );
+  </React.Fragment>
+);
 };
 
-export default Home;
+export default Index;

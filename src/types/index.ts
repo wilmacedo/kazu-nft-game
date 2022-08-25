@@ -22,3 +22,10 @@ export interface ProviderInfo {
   handleConnect?: () => void;
   call: ICall;
 }
+
+export interface Kazu {
+  frontImg: string;
+  backImg: string;
+  fliped: boolean;
+  hash: string;
+}
