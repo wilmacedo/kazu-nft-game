@@ -33,8 +33,9 @@ export interface IEngine {
 }
 
 const Index: React.FC<IEngine> = ({
-  userKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' },
-  botKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' } }) => {
+  userKazu = { img: '/src/assets/kazu2.png' },
+  botKazu = { img: '/src/assets/kazu3.png' }
+}) => {
   const [battle, setBattle] = useState<IBattle>({
     status: 1
   })
@@ -50,65 +51,64 @@ const Index: React.FC<IEngine> = ({
   const [rounds, setRounds] = useState<IRound[]>([])
 
   useEffect(() => {
-    console.log('battle initialized')
     if (round.status === 1) {
-      console.log('round', 0)
       if (!round.userTurn) {
-        console.log('bot turn')
         tapKazus()
       }
     }
   }, [])
 
   useEffect(() => {
-    console.log('round changed')
-    if (round.status === 1) {
-      if (!round.userTurn) {
-        console.log("round bot")
-        tapKazus()
-      }
+    if (round.status === 2) {
+      console.log('use effect next round', { ...round })
+      nextRound()
     }
   }, [round])
 
   const nextRound = () => {
     setRounds((prevState) => [...prevState, round])
-    setRound((prevState) => {
-      const bucketKazos: Kazu[] = [...prevState.bucketUser, ...prevState.bucketBot]
-      return {
-        ...prevState,
-        kazus: prevState.kazus.filter((item) => !bucketKazos.includes(item)),
-        userTurn: !round.userTurn
-      }
-    })
+    if (round.bucketBot.length === 2 || round.bucketUser.length === 2) {
+      console.log("Battle Finished!!!")
+    } else {
+      console.log('next round')
+      setRound((prevState) => {
+        return {
+          ...prevState,
+          status: 1,
+          userTurn: !prevState.userTurn
+        }
+      })
+    }
   }
 
   const tapKazus = () => {
-    console.log('tap kazus')
-    const bucketUser: Kazu[] = []
-    const bucketBot: Kazu[] = []
+    const bucketUser: Kazu[] = [...round.bucketUser]
+    const bucketBot: Kazu[] = [...round.bucketBot]
+    let kazus: Kazu[] = [...round.kazus]
 
-    round.kazus.map((kazu: Kazu) => {
+    round.kazus.map((kazu: Kazu, index) => {
       const win = Boolean(Math.random() < 0.5)
-      if (win && round.userTurn) {
-        bucketUser.push(kazu)
-      } else if (win && !round.userTurn) {
-        bucketBot.push(kazu)
+      console.log({ win })
+      if (win) {
+        kazus = kazus.filter(item => item.img !== kazu.img)
+        console.log({ kazus })
+        if (round.userTurn) {
+          bucketUser.push(kazu)
+        } else if (!round.userTurn) {
+          bucketBot.push(kazu)
+        }
       }
     })
 
-    console.log("bucketUser", [...bucketUser])
-    console.log("bucketBot", [...bucketBot])
-    const bucketKazos: Kazu[] = [...bucketUser, ...bucketBot]
     setRound((prevState) => {
       return {
         ...prevState,
-        kazus: prevState.kazus.filter((item) => !bucketKazos.includes(item)),
+        kazus: kazus,
         bucketBot: [...bucketBot],
         bucketUser: [...bucketUser],
         status: 2
       }
     })
-    nextRound()
   }
 
   const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
