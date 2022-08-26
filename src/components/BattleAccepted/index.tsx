@@ -36,7 +36,6 @@ const BattleAccepted: React.FC<IConfirmBetModal> = ({
   const nft = nftSelected(selected);
   const randomNFt = () => {
     const r = Math.random() * (5 - 1) + 1;
-    console.log(r);
 
     return cards[Number(Number(r).toFixed(0))];
   };
