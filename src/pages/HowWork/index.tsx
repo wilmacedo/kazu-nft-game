@@ -7,7 +7,7 @@ const HowWork: React.FC = () => {
   return (
     <Layout>
       <Container>
-        {/* <Card>
+        <Card>
           <h1>How it Works</h1>
           <StepsContainer>
             <span>1. Connect your Klever wallet to login to Kazu</span>
@@ -15,9 +15,7 @@ const HowWork: React.FC = () => {
             <span>3. Head to the Store tab to buy Kazu packs or Marketplace tab to buy Kazus from other players</span>
             <span>4. Go to the Battle tab. You are now ready to battle Kazus!</span>
           </StepsContainer>
-        </Card> */}
-
-        <Kazu />
+        </Card>
       </Container>
     </Layout>
   );

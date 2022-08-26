@@ -8,12 +8,14 @@ interface IKazu {
   frontImage?: string;
   defaultSide?: boolean;
   animationState?: string;
+  setAnimationState: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Kazu: React.FC<IKazu> = ({
   frontImage = Kazu1,
   defaultSide = true,
   animationState = '',
+  setAnimationState,
 }) => {
   const [currentSide, setCurrentSide] = useState(defaultSide);
 
