@@ -58,25 +58,25 @@ const Home: React.FC = () => {
   };
 
   const handlerModalBattleAccept = async () => {
-    // const transfer = {
-    //   amount: 20 * 10 ** 6,
-    //   receiver:
-    //     "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk",
-    // };
-    // const contract = {
-    //   type: 0,
-    //   payload: transfer,
-    // };
+    const transfer = {
+      amount: 20 * 10 ** 6,
+      receiver:
+        "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk",
+    };
+    const contract = {
+      type: 0,
+      payload: transfer,
+    };
 
-    // setTxLoading(true);
-    // const response = await window.kleverWeb.buildTransaction(contract);
-    // setTxLoading(false);
+    setTxLoading(true);
+    const response = await window.kleverWeb.buildTransaction(contract);
+    setTxLoading(false);
 
-    // if (response.code !== "successful") {
-    //   setModalOpen(false);
-    //   console.error("Error on trigger tx", response);
-    //   return;
-    // }
+    if (response.code !== "successful") {
+      setModalOpen(false);
+      console.error("Error on trigger tx", response);
+      return;
+    }
 
     setModalOpen(false);
     setloading(true);
