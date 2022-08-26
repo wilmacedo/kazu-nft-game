@@ -36,10 +36,6 @@ const Index: React.FC<IEngine> = ({
   userKazu = { img: '/src/assets/kazu2.png' },
   botKazu = { img: '/src/assets/kazu3.png' }
 }) => {
-  const [battle, setBattle] = useState<IBattle>({
-    status: 1
-  })
-
   const [round, setRound] = useState<IRound>({
     userTurn: Boolean(Math.random() < 0.5),
     kazus: [userKazu, botKazu],
@@ -63,6 +59,11 @@ const Index: React.FC<IEngine> = ({
       console.log('use effect next round', { ...round })
       nextRound()
     }
+    if (round.status === 1) {
+      if (!round.userTurn) {
+        tapKazus()
+      }
+    }
   }, [round])
 
   const nextRound = () => {
@@ -70,10 +71,20 @@ const Index: React.FC<IEngine> = ({
     if (round.bucketBot.length === 2 || round.bucketUser.length === 2) {
       console.log("Battle Finished!!!")
     } else {
-      console.log('next round')
       setRound((prevState) => {
+        let kazus = [...prevState.kazus]
+        let bucketBot = [...prevState.bucketBot]
+        let bucketUser = [...prevState.bucketUser]
+
+        if (kazus.length === 0) {
+          kazus = [...round.bucketBot, ...round.bucketUser]
+          bucketBot = []
+          bucketUser = []
+        }
         return {
-          ...prevState,
+          kazus: [...kazus],
+          bucketBot: [...bucketBot],
+          bucketUser: [...bucketUser],
           status: 1,
           userTurn: !prevState.userTurn
         }
@@ -88,10 +99,8 @@ const Index: React.FC<IEngine> = ({
 
     round.kazus.map((kazu: Kazu, index) => {
       const win = Boolean(Math.random() < 0.5)
-      console.log({ win })
       if (win) {
         kazus = kazus.filter(item => item.img !== kazu.img)
-        console.log({ kazus })
         if (round.userTurn) {
           bucketUser.push(kazu)
         } else if (!round.userTurn) {
@@ -113,6 +122,7 @@ const Index: React.FC<IEngine> = ({
 
   const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+    console.log('hadnle click')
     tapKazus()
   }
 
