@@ -60,12 +60,12 @@ const Home: React.FC = () => {
     setTimeout(() => {
       // setloading(false);
       setModalBattleAcceptedOpen(true);
-    }, 3000);
+    }, 1000);
 
     setTimeout(() => {
       setModalBattleAcceptedOpen(false);
       navigate("/battle/accept");
-    }, 7000);
+    }, 2000);
   };
 
   const nftSelected = (id: number) => {

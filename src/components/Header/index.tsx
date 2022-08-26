@@ -67,7 +67,7 @@ const Header: React.FC<IHeaderMenu> = () => {
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <Menu disabled={!provider.isConnected()} />
+      <Menu disabled={!provider.isConnected() || location.pathname.includes('/accept')}/>
       {provider.isConnected() === true ? (
         <AccountContainer>
           <span>{(provider.getBalance() / 10 ** 6).toLocaleString()} KLV</span>
