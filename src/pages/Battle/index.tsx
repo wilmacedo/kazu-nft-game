@@ -33,12 +33,9 @@ export interface IEngine {
 }
 
 const Index: React.FC<IEngine> = ({
-  userKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' },
-  botKazu = { img: 'https://i.pinimg.com/originals/54/f6/46/54f646b74be4ad7f047dd03f11a0a995.png' } }) => {
-  const [battle, setBattle] = useState<IBattle>({
-    status: 1
-  })
-
+  userKazu = { img: '/src/assets/kazu2.png' },
+  botKazu = { img: '/src/assets/kazu3.png' }
+}) => {
   const [round, setRound] = useState<IRound>({
     userTurn: Boolean(Math.random() < 0.5),
     kazus: [userKazu, botKazu],
@@ -50,55 +47,108 @@ const Index: React.FC<IEngine> = ({
   const [rounds, setRounds] = useState<IRound[]>([])
 
   useEffect(() => {
+    if (round.status === 1) {
+      if (!round.userTurn) {
+        tapKazus()
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (round.status === 2) {
-      setRounds((all) => [...all, round])
+      console.log('use effect next round', { ...round })
+      nextRound()
+    }
+    if (round.status === 1) {
+      if (!round.userTurn) {
+        tapKazus()
+      }
     }
   }, [round])
 
-  const tapKazus = () => {
-    const bucketUser: Kazu[] = []
-    const bucketBot: Kazu[] = []
+  const nextRound = () => {
+    setRounds((prevState) => [...prevState, round])
+    if (round.bucketBot.length === 2 || round.bucketUser.length === 2) {
+      console.log("Battle Finished!!!")
+    } else {
+      setRound((prevState) => {
+        let kazus = [...prevState.kazus]
+        let bucketBot = [...prevState.bucketBot]
+        let bucketUser = [...prevState.bucketUser]
 
-    round.kazus.map((kazu: Kazu) => {
+        if (kazus.length === 0) {
+          kazus = [...round.bucketBot, ...round.bucketUser]
+          bucketBot = []
+          bucketUser = []
+        }
+        return {
+          kazus: [...kazus],
+          bucketBot: [...bucketBot],
+          bucketUser: [...bucketUser],
+          status: 1,
+          userTurn: !prevState.userTurn
+        }
+      })
+    }
+  }
+
+  const tapKazus = () => {
+    const bucketUser: Kazu[] = [...round.bucketUser]
+    const bucketBot: Kazu[] = [...round.bucketBot]
+    let kazus: Kazu[] = [...round.kazus]
+
+    round.kazus.map((kazu: Kazu, index) => {
       const win = Boolean(Math.random() < 0.5)
       if (win) {
-        bucketUser.push(kazu)
-      } else {
-        bucketBot.push(kazu)
+        kazus = kazus.filter(item => item.img !== kazu.img)
+        if (round.userTurn) {
+          bucketUser.push(kazu)
+        } else if (!round.userTurn) {
+          bucketBot.push(kazu)
+        }
       }
     })
-    // setRound((round) => { ...round, bucketBot, bucketUser, status: 2 })
-}
 
-const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
-  e.preventDefault()
+    setRound((prevState) => {
+      return {
+        ...prevState,
+        kazus: kazus,
+        bucketBot: [...bucketBot],
+        bucketUser: [...bucketUser],
+        status: 2
+      }
+    })
+  }
 
-  // setRound({})
-}
+  const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    console.log('hadnle click')
+    tapKazus()
+  }
 
-return (
-  <React.Fragment>
-    <Layout>
-      <Container>
-        <CardConteiner>
-          <ScoreboardContainer>
-            <div>
-              <h1>Loss</h1>
-              <SmallTazuList images={round.bucketBot} />
-            </div>
+  return (
+    <React.Fragment>
+      <Layout>
+        <Container>
+          <CardConteiner>
+            <ScoreboardContainer>
+              <div>
+                <h1>Bot</h1>
+                <SmallTazuList images={round.bucketBot} />
+              </div>
 
-            <div>
-              <h1>Winer</h1>
-              <SmallTazuList images={round.bucketUser} />
-            </div>
+              <div>
+                <h1>User</h1>
+                <SmallTazuList images={round.bucketUser} />
+              </div>
 
-            {round.userTurn && <img src={hand} onClick={handleUserClick} />}
-          </ScoreboardContainer>
-        </CardConteiner>
-      </Container>
-    </Layout>
-  </React.Fragment>
-);
+              {round.userTurn && <img src={hand} onClick={handleUserClick} />}
+            </ScoreboardContainer>
+          </CardConteiner>
+        </Container>
+      </Layout>
+    </React.Fragment>
+  );
 };
 
 export default Index;
