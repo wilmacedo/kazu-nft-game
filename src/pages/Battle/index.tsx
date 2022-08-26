@@ -50,55 +50,95 @@ const Index: React.FC<IEngine> = ({
   const [rounds, setRounds] = useState<IRound[]>([])
 
   useEffect(() => {
-    if (round.status === 2) {
-      setRounds((all) => [...all, round])
+    console.log('battle initialized')
+    if (round.status === 1) {
+      console.log('round', 0)
+      if (!round.userTurn) {
+        console.log('bot turn')
+        tapKazus()
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('round changed')
+    if (round.status === 1) {
+      if (!round.userTurn) {
+        console.log("round bot")
+        tapKazus()
+      }
     }
   }, [round])
 
+  const nextRound = () => {
+    setRounds((prevState) => [...prevState, round])
+    setRound((prevState) => {
+      const bucketKazos: Kazu[] = [...prevState.bucketUser, ...prevState.bucketBot]
+      return {
+        ...prevState,
+        kazus: prevState.kazus.filter((item) => !bucketKazos.includes(item)),
+        userTurn: !round.userTurn
+      }
+    })
+  }
+
   const tapKazus = () => {
+    console.log('tap kazus')
     const bucketUser: Kazu[] = []
     const bucketBot: Kazu[] = []
 
     round.kazus.map((kazu: Kazu) => {
       const win = Boolean(Math.random() < 0.5)
-      if (win) {
+      if (win && round.userTurn) {
         bucketUser.push(kazu)
-      } else {
+      } else if (win && !round.userTurn) {
         bucketBot.push(kazu)
       }
     })
-    setRound((round) => { ...round, bucketBot, bucketUser, status: 2 })
-}
 
-const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
-  e.preventDefault()
+    console.log("bucketUser", [...bucketUser])
+    console.log("bucketBot", [...bucketBot])
+    const bucketKazos: Kazu[] = [...bucketUser, ...bucketBot]
+    setRound((prevState) => {
+      return {
+        ...prevState,
+        kazus: prevState.kazus.filter((item) => !bucketKazos.includes(item)),
+        bucketBot: [...bucketBot],
+        bucketUser: [...bucketUser],
+        status: 2
+      }
+    })
+    nextRound()
+  }
 
-  setRound({})
-}
+  const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    tapKazus()
+  }
 
-return (
-  <React.Fragment>
-    <Layout>
-      <Container>
-        <CardConteiner>
-          <ScoreboardContainer>
-            <div>
-              <h1>Loss</h1>
-              <SmallTazuList images={round.bucketBot} />
-            </div>
+  return (
+    <React.Fragment>
+      <Layout>
+        <Container>
+          <CardConteiner>
+            <ScoreboardContainer>
+              <div>
+                <h1>Bot</h1>
+                <SmallTazuList images={round.bucketBot} />
+              </div>
 
-            <div>
-              <h1>Winer</h1>
-              <SmallTazuList images={round.bucketUser} />
-            </div>
+              <div>
+                <h1>User</h1>
+                <SmallTazuList images={round.bucketUser} />
+              </div>
 
-            {round.userTurn && <img src={hand} onClick={handleUserClick} />}
-          </ScoreboardContainer>
-        </CardConteiner>
-      </Container>
-    </Layout>
-  </React.Fragment>
-);
+              {round.userTurn && <img src={hand} onClick={handleUserClick} />}
+            </ScoreboardContainer>
+          </CardConteiner>
+        </Container>
+      </Layout>
+    </React.Fragment>
+  );
 };
 
 export default Index;
