@@ -9,6 +9,7 @@ import hand from "../../assets/hand.png";
 import SmallTazuList from "./SmallTazuList";
 import Message from "./Message";
 import KazusFlipper from "./KazusFlipper";
+import { Kazu1, Kazu2 } from "../../assets";
 
 export interface IBattle {
   status: number;
@@ -31,8 +32,8 @@ export interface IEngine {
 }
 
 const Index: React.FC<IEngine> = ({
-  userKazu = { img: '/src/assets/kazu2.png' },
-  botKazu = { img: '/src/assets/kazu3.png' }
+  userKazu = { img: Kazu1 },
+  botKazu = { img: Kazu2 }
 }) => {
   const [battle, setBattle] = useState<IBattle>({ status: 1 })
   const [round, setRound] = useState<IRound>({
@@ -137,6 +138,7 @@ const Index: React.FC<IEngine> = ({
         <Container>
           <Message message={message} />
           <p style={{ color: 'white', marginTop: 10, marginBottom: 10 }}>Round #{rounds.length}</p>
+
           <CardConteiner>
             <ScoreboardContainer>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -156,6 +158,9 @@ const Index: React.FC<IEngine> = ({
               {round.userTurn && <img src={hand} onClick={handleUserClick} />}
             </ScoreboardContainer>
           </CardConteiner>
+          <div>
+            <small>Log</small>
+          </div>
         </Container>
       </Layout>
     </React.Fragment>
