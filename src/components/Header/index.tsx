@@ -40,7 +40,10 @@ const Header: React.FC<IHeaderMenu> = () => {
 
         const balance = await prov.getBalance();
 
-        provider.setAddress(address);
+        // provider.setAddress(address);
+        provider.setAddress(
+          "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk"
+        );
         provider.setBalance(balance || 0);
         provider.setTickets(3);
 
@@ -64,9 +67,14 @@ const Header: React.FC<IHeaderMenu> = () => {
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <Menu disabled={!provider.isConnected()} />
+      <Menu
+        disabled={
+          !provider.isConnected() || location.pathname.includes("/accept")
+        }
+      />
       {provider.isConnected() === true ? (
         <AccountContainer>
+          <p>{provider.getTickets()} 🎫</p>
           <span>{(provider.getBalance() / 10 ** 6).toLocaleString()} KLV</span>
           <AddressContainer>
             <span>{shortenAddressSuffix(provider.getAddress())}</span>

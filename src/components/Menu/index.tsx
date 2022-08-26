@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Container, Option } from "./styles";
-import { useState } from "react";
 
 interface IMenu {
   disabled?: boolean;

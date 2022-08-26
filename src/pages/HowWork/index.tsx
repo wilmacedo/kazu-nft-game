@@ -1,7 +1,6 @@
 import { Card, Container, StepsContainer } from "./styles";
 import Layout from "../Layout";
 import React from "react";
-import Hand from "../../components/Hand";
 
 const HowWork: React.FC = () => {
   return (

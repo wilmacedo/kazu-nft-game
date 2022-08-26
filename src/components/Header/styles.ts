@@ -45,6 +45,11 @@ export const AccountContainer = styled.div`
   span {
     font-weight: 400;
   }
+
+  p {
+    color: ${(props) => props.theme.white};
+    padding-right: 1rem;
+  }
 `;
 
 export const AddressContainer = styled.div`

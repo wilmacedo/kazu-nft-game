@@ -10,16 +10,26 @@ import {
   Button,
   XButton,
 } from "./styles";
+import { useProviderData } from "../../contexts/ProviderData";
 
 interface IConfirmBetModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onConfirm: Function;
+  loading?: boolean;
 }
 
 const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
   setOpen,
   onConfirm,
+  loading,
 }) => {
+  const provider = useProviderData();
+
+  const handlerOnConfirm = () => {
+    onConfirm();
+    provider.setTickets(provider.getTickets() - 1);
+  };
+
   return (
     <Container>
       <Card>
@@ -30,7 +40,7 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
         <Divider />
         <Body>
           <Row>
-            <p>Reward amount</p>
+            <p>Bet amount</p>
             <span>20 KLV</span>
           </Row>
           <Row>
@@ -40,8 +50,8 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
         </Body>
         <Divider />
         <Footer>
-          <Button onClick={() => onConfirm()}>
-            <span>Confirm</span>
+          <Button disabled={loading} onClick={() => onConfirm()}>
+            <span>{loading ? "Waiting confirm tx..." : "Confirm"}</span>
           </Button>
         </Footer>
       </Card>
