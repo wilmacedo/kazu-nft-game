@@ -1,170 +1,84 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Button } from "../Home/styles";
 import Layout from "../Layout";
-import {
-  CardConteiner,
-  Container,
-  ScoreboardContainer,
-} from "./styles";
-import hand from "../../assets/hand.png";
-import SmallTazuList from "./SmallTazuList";
-import Message from "./Message";
-import KazusFlipper from "./KazusFlipper";
-import { Kazu1, Kazu2 } from "../../assets";
+import { Card, Container } from "./styles";
 
-export interface IBattle {
-  status: number;
+interface IHistory {
+  round: number;
+  changes: number[];
 }
 
-export interface IRound {
-  userTurn: boolean;
-  kazus: Kazu[];
-  bucketUser: Kazu[];
-  bucketBot: Kazu[];
-  status: number;
-}
+const Battle: React.FC = () => {
+  const navigate = useNavigate();
+  const [round, setRound] = useState(0);
+  const [history, setHistory] = useState<IHistory[]>([]);
+  const [done, setDone] = useState(-1);
 
-interface Kazu {
-  img: string;
-}
-export interface IEngine {
-  userKazu?: Kazu,
-  botKazu?: Kazu,
-}
+  const handleFlip = () => {
+    if (done !== -1) {
+      navigate("/battle");
+      return;
+    }
 
-const Index: React.FC<IEngine> = ({
-  userKazu = { img: Kazu1 },
-  botKazu = { img: Kazu2 }
-}) => {
-  const [battle, setBattle] = useState<IBattle>({ status: 1 })
-  const [round, setRound] = useState<IRound>({
-    userTurn: Boolean(Math.random() < 0.5),
-    kazus: [userKazu, botKazu],
-    bucketUser: [],
-    bucketBot: [],
-    status: 1
-  })
-  const [message, setMessage] = useState<string>("Have fun!")
+    const changes = [
+      Math.floor(Math.random() * 100),
+      Math.floor(Math.random() * 100),
+    ];
 
-  const [rounds, setRounds] = useState<IRound[]>([])
+    setHistory((prevData) => [...prevData, { round, changes }]);
 
-  useEffect(() => {
-    if (round.status === 1) {
-      setMessage(round.userTurn ? "You Turn" : "Player 1 turn")
-      if (!round.userTurn) {
-        tapKazus()
+    const playerFlip = changes[0] > 50;
+    const computerFlip = changes[1] > 50;
+
+    if (round % 2 === 0) {
+      // Player round
+      if (playerFlip && computerFlip) {
+        setDone(0);
+        return;
       }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (round.status === 2) {
-      console.log('use effect next round', { ...round })
-      nextRound()
-    }
-    if (round.status === 1) {
-      if (!round.userTurn) {
-        tapKazus()
-      }
-    }
-  }, [round])
-
-  const nextRound = () => {
-    setRounds((prevState) => [...prevState, round])
-    if (round.bucketBot.length === 2 || round.bucketUser.length === 2) {
-      setBattle(prevState => ({ ...prevState, status: 2 }))
-      setMessage("Battle Finished!!!")
     } else {
-      setRound((prevState) => {
-        let kazus = [...prevState.kazus]
-        let bucketBot = [...prevState.bucketBot]
-        let bucketUser = [...prevState.bucketUser]
+      // Computer round
 
-        if (kazus.length === 0) {
-          kazus = [...round.bucketBot, ...round.bucketUser]
-          bucketBot = []
-          bucketUser = []
-        }
-        return {
-          kazus: [...kazus],
-          bucketBot: [...bucketBot],
-          bucketUser: [...bucketUser],
-          status: 1,
-          userTurn: !prevState.userTurn
-        }
-      })
-    }
-  }
-
-  const tapKazus = () => {
-    const bucketUser: Kazu[] = [...round.bucketUser]
-    const bucketBot: Kazu[] = [...round.bucketBot]
-    let kazus: Kazu[] = [...round.kazus]
-
-    round.kazus.map((kazu: Kazu, index) => {
-      const win = Boolean(Math.random() < 0.5)
-      if (win) {
-        kazus = kazus.filter(item => item.img !== kazu.img)
-        if (round.userTurn) {
-          bucketUser.push(kazu)
-        } else if (!round.userTurn) {
-          bucketBot.push(kazu)
-        }
+      if (playerFlip && computerFlip) {
+        setDone(1);
+        return;
       }
-    })
-
-    setTimeout(() => {
-      setRound((prevState) => {
-        return {
-          ...prevState,
-          kazus: kazus,
-          bucketBot: [...bucketBot],
-          bucketUser: [...bucketUser],
-          status: 2
-        }
-      })
-    }, 2500)
-  }
-
-  const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault()
-    if (battle.status === 1 && round.status === 1) {
-      tapKazus()
     }
-  }
+
+    setRound((prevRound) => prevRound + 1);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (round % 2 !== 0) {
+        handleFlip();
+      }
+    }, 1000);
+  }, [round]);
+
+  const getFlipLabel = (value: number) => (value > 50 ? "Flip" : "Stay");
 
   return (
-    <React.Fragment>
-      <Layout>
-        <Container>
-          <Message message={message} />
-          <p style={{ color: 'white', marginTop: 10, marginBottom: 10 }}>Round #{rounds.length}</p>
-
-          <CardConteiner>
-            <ScoreboardContainer>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <h1>Player 1</h1>
-                  <SmallTazuList images={round.bucketBot} />
-                </div>
-
-                <div>
-                  <h1>User</h1>
-                  <SmallTazuList images={round.bucketUser} />
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                <KazusFlipper kazus={round.kazus} />
-              </div>
-              {round.userTurn && <img src={hand} onClick={handleUserClick} />}
-            </ScoreboardContainer>
-          </CardConteiner>
-          <div>
-            <small>Log</small>
-          </div>
-        </Container>
-      </Layout>
-    </React.Fragment>
+    <Layout>
+      <Container>
+        <Card>
+          <h1>Battle - Round {round + 1}</h1>
+          {history.map((item, index) => (
+            <span key={index}>
+              Round {item.round + 1} - {getFlipLabel(item.changes[0])} /{" "}
+              {getFlipLabel(item.changes[1])}
+            </span>
+          ))}
+          <br />
+          {done !== -1 && <span>{done === 0 ? "You win" : "Game Over"}</span>}
+          <Button onClick={handleFlip}>
+            {done !== -1 ? "Back to Home" : "Flip"}
+          </Button>
+        </Card>
+      </Container>
+    </Layout>
   );
 };
 
-export default Index;
+export default Battle;
