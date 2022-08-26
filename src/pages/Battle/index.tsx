@@ -28,8 +28,8 @@ interface Kazu {
   img: string;
 }
 export interface IEngine {
-  userKazu: Kazu,
-  botKazu: Kazu,
+  userKazu?: Kazu,
+  botKazu?: Kazu,
 }
 
 const Index: React.FC<IEngine> = ({
