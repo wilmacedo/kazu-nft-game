@@ -46,6 +46,8 @@ const Home: React.FC = () => {
   const [modalBattleAcceptedOpen, setModalBattleAcceptedOpen] = useState(false);
   const [nfts, setNfts] = useState<INft[]>();
 
+  const [txLoading, setTxLoading] = useState(false);
+
   const handleStart = () => {
     if (selected !== -1) setModalOpen(true);
   };
@@ -54,14 +56,33 @@ const Home: React.FC = () => {
     setSelected(id !== selected ? id : -1);
   };
 
-  const handlerModalBattleAccept = () => {
+  const handlerModalBattleAccept = async () => {
+    const transfer = {
+      amount: 20 * 10 ** 6,
+      receiver:
+        "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk",
+    };
+    const contract = {
+      type: 0,
+      payload: transfer,
+    };
+
+    setTxLoading(true);
+    const response = await window.kleverWeb.buildTransaction(contract);
+    setTxLoading(false);
+
+    if (response.code !== "successful") {
+      setModalOpen(false);
+      console.error("Error on trigger tx", response);
+      return;
+    }
+
     setModalOpen(false);
     setloading(true);
     setTimeout(() => {
       // setloading(false);
       setModalBattleAcceptedOpen(true);
     }, 1000);
-
     setTimeout(() => {
       setModalBattleAcceptedOpen(false);
       navigate("/battle/accept");
@@ -127,6 +148,7 @@ const Home: React.FC = () => {
           <ConfirmBetModal
             onConfirm={handlerModalBattleAccept}
             setOpen={setModalOpen}
+            loading={txLoading}
           />
         )}
         {loading && <Loading />}
