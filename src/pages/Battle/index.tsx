@@ -10,6 +10,7 @@ import hand from "../../assets/hand.png";
 import SmallTazuList from "./SmallTazuList";
 import Message from "./Message";
 import KazusFlipper from "./KazusFlipper";
+import { Kazu1, Kazu2 } from "../../assets";
 
 export interface IBattle {
   status: number;
@@ -32,8 +33,8 @@ export interface IEngine {
 }
 
 const Index: React.FC<IEngine> = ({
-  userKazu = { img: "/src/assets/kazu2.png" },
-  botKazu = { img: "/src/assets/kazu3.png" },
+  userKazu = { img: Kazu1 },
+  botKazu = { img: Kazu2 },
 }) => {
   const [battle, setBattle] = useState<IBattle>({ status: 1 });
   const [round, setRound] = useState<IRound>({
@@ -46,6 +47,7 @@ const Index: React.FC<IEngine> = ({
   const [message, setMessage] = useState<string>("Have fun!");
 
   const [rounds, setRounds] = useState<IRound[]>([]);
+  const [losg, setLogs] = useState<IRound[]>([]);
 
   useEffect(() => {
     if (round.status === 1) {
@@ -133,36 +135,64 @@ const Index: React.FC<IEngine> = ({
   };
 
   return (
-    <React.Fragment>
-      <Layout>
-        <Container>
-          <Message message={message} />
-          <p style={{ color: "white", marginTop: 10, marginBottom: 10 }}>
-            Round #{rounds.length}
-          </p>
-          <CardConteiner>
-            <ScoreboardContainer>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h1>Player 1</h1>
-                  <SmallTazuList images={round.bucketBot} />
-                </div>
+    console.log({ rounds }),
+    (
+      <React.Fragment>
+        <Layout>
+          <Container>
+            <Message message={message} />
+            <p style={{ color: "white", marginTop: 10, marginBottom: 10 }}>
+              Round #{rounds.length}
+            </p>
 
-                <div>
-                  <h1>User</h1>
-                  <SmallTazuList images={round.bucketUser} />
+            <CardConteiner>
+              <ScoreboardContainer>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>
+                    <h1>Player 1</h1>
+                    <SmallTazuList images={round.bucketBot} />
+                  </div>
+
+                  <div>
+                    <h1>User</h1>
+                    <SmallTazuList images={round.bucketUser} />
+                  </div>
                 </div>
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
-                <KazusFlipper kazus={round.kazus} />
-              </div>
-              {round.userTurn && <img src={hand} onClick={handleUserClick} />}
-            </ScoreboardContainer>
-          </CardConteiner>
-          <ListConteiner>AAA</ListConteiner>
-        </Container>
-      </Layout>
-    </React.Fragment>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  <KazusFlipper kazus={round.kazus} />
+                </div>
+                {round.userTurn && battle.status === 1 && (
+                  <img src={hand} onClick={handleUserClick} />
+                )}
+              </ScoreboardContainer>
+            </CardConteiner>
+            <div>
+              <ul>
+                {rounds?.map((log: IRound, index) => (
+                  <li style={{ color: "#FFF" }}>
+                    {` Round: ${index + 1} ${
+                      log.userTurn ? "User" : "Player"
+                    } | 
+                    ${
+                      log.userTurn && battle.status === 1
+                        ? log.bucketUser?.length
+                        : log.bucketBot?.length
+                    }
+                    `}
+                    {/* {log.userTurn ? "User" : "Player"} |{" "}
+                    {log.userTurn && battle.status === 1
+                      ? log.bucketUser?.length
+                      : log.bucketBot?.length} */}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Container>
+        </Layout>
+      </React.Fragment>
+    )
   );
 };
 
