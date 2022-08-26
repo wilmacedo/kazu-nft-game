@@ -49,6 +49,7 @@ const Home: React.FC = () => {
   const [txLoading, setTxLoading] = useState(false);
 
   const handleStart = () => {
+    if (provider.getTickets() < 1) return;
     if (selected !== -1) setModalOpen(true);
   };
 
@@ -57,28 +58,30 @@ const Home: React.FC = () => {
   };
 
   const handlerModalBattleAccept = async () => {
-    // const transfer = {
-    //   amount: 20 * 10 ** 6,
-    //   receiver:
-    //     "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk",
-    // };
-    // const contract = {
-    //   type: 0,
-    //   payload: transfer,
-    // };
+    const transfer = {
+      amount: 20 * 10 ** 6,
+      receiver:
+        "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk",
+    };
+    const contract = {
+      type: 0,
+      payload: transfer,
+    };
 
-    // setTxLoading(true);
-    // const response = await window.kleverWeb.buildTransaction(contract);
-    // setTxLoading(false);
+    setTxLoading(true);
+    const response = await window.kleverWeb.buildTransaction(contract);
+    setTxLoading(false);
 
-    // if (response.code !== "successful") {
-    //   setModalOpen(false);
-    //   console.error("Error on trigger tx", response);
-    //   return;
-    // }
+    if (response.code !== "successful") {
+      setModalOpen(false);
+      console.error("Error on trigger tx", response);
+      return;
+    }
 
     setModalOpen(false);
     setloading(true);
+    provider.setTickets(provider.getTickets() - 1);
+
     setTimeout(() => {
       // setloading(false);
       setModalBattleAcceptedOpen(true);
@@ -141,7 +144,10 @@ const Home: React.FC = () => {
             ))}
           </KazuList>
         </Card>
-        <StartButton onClick={handleStart} disabled={selected === -1}>
+        <StartButton
+          onClick={handleStart}
+          disabled={selected === -1 || provider.getTickets() < 1}
+        >
           <span>Start Battle</span>
         </StartButton>
         {modalOpen && (
