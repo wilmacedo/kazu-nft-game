@@ -1,41 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Backside, Kazu1 } from "../../assets";
 import {
   BackSide, Container, FrontSide, KazuSides,
 } from "./styles";
 
 interface IKazu {
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  onConfirm?: Function;
+  frontImage?: string;
+  defaultSide?: boolean;
+  animationState?: string;
 }
 
 const Kazu: React.FC<IKazu> = ({
-  setOpen,
-  onConfirm,
+  frontImage = Kazu1,
+  defaultSide = true,
+  animationState = '',
 }) => {
-  const [x, setX] = useState(0);
+  const [currentSide, setCurrentSide] = useState(defaultSide);
 
-  const handle = () => {
-    if (x < 3) {
-      setX(x+1);
-    } else {
-      setX(0);
-    }
-
-    // if (x === 2) {
-    //   setX(3);
-    // } else {
-    //   setX(2);
-    // }
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      if (animationState !== '') {
+        const side = animationState[1] === 'f'
+        setCurrentSide(side);
+      }
+    }, 500)
+  }, [animationState]);
 
   return (
     <Container>
-      <button style={{ width: '40px', height: '40px' }} onClick={handle}/>
-      <span>{x}</span>
-      <KazuSides anim={x}>
+      <KazuSides animation={animationState} side={currentSide}>
         <FrontSide>
-          <img src={Kazu1} />
+          <img src={frontImage} />
         </FrontSide>
         <BackSide>
           <img src={Backside} />

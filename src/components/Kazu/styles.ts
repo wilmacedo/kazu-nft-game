@@ -5,7 +5,8 @@ import { Button as DefaultButton } from "../Button";
 export const Container = styled.div``;
 
 interface IKazuSides {
-  anim?: number;
+  animation?: string;
+  side?: boolean;
 }
 
 const spinFrontToFront = keyframes`
@@ -44,6 +45,15 @@ const spinBackToFront = keyframes`
   }
 `;
 
+const infiniteSpin = keyframes`
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+`;
+
 export const KazuSides = styled.div<IKazuSides>`
   height: 20rem;
   width: 20rem;
@@ -56,33 +66,41 @@ export const KazuSides = styled.div<IKazuSides>`
     width: 20rem;
   }
 
-  animation-duration: 1.5s;
-  animation-iteration-count: 1;
+  transform: ${(props) => (props.side === false ? "rotateY(180deg)" : "0")};
+  animation-duration: ${(props) =>
+    props.animation === "infinite" ? "5s" : "1.5s"};
+  animation-iteration-count: ${(props) =>
+    props.animation === "infinite" ? "infinite" : "1"};
 
   ${(props) =>
-    props.anim === 0 &&
+    props.animation === "ff" &&
     css`
       animation-name: ${spinFrontToFront};
     `}
 
   ${(props) =>
-    props.anim === 1 &&
+    props.animation === "fb" &&
     css`
       animation-name: ${spinFrontToBack};
-      transform: rotateY(180deg);
     `}
 
     ${(props) =>
-    props.anim === 2 &&
+    props.animation === "bb" &&
     css`
       animation-name: ${spinBackToBack};
-      transform: rotateY(180deg);
     `}
 
     ${(props) =>
-    props.anim === 3 &&
+    props.animation === "bf" &&
     css`
       animation-name: ${spinBackToFront};
+    `}
+
+    ${(props) =>
+    props.animation === "infinite" &&
+    css`
+      animation-timing-function: linear;
+      animation-name: ${infiniteSpin};
     `}
 `;
 
