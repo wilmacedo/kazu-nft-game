@@ -8,7 +8,7 @@ interface IKazu {
   frontImage?: string;
   defaultSide?: boolean;
   animationState?: string;
-  setAnimationState: React.Dispatch<React.SetStateAction<string>>;
+  setAnimationState?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Kazu: React.FC<IKazu> = ({
@@ -21,7 +21,7 @@ const Kazu: React.FC<IKazu> = ({
 
   useEffect(() => {
     setTimeout(() => {
-      if (animationState !== '') {
+      if (animationState !== '' && setAnimationState) {
         const side = animationState[1] === 'f'
         setCurrentSide(side);
         setAnimationState('');
