@@ -49,6 +49,7 @@ const Home: React.FC = () => {
   const [txLoading, setTxLoading] = useState(false);
 
   const handleStart = () => {
+    if (provider.getTickets() < 1) return;
     if (selected !== -1) setModalOpen(true);
   };
 
@@ -143,7 +144,10 @@ const Home: React.FC = () => {
             ))}
           </KazuList>
         </Card>
-        <StartButton onClick={handleStart} disabled={selected === -1}>
+        <StartButton
+          onClick={handleStart}
+          disabled={selected === -1 || provider.getTickets() < 1}
+        >
           <span>Start Battle</span>
         </StartButton>
         {modalOpen && (
