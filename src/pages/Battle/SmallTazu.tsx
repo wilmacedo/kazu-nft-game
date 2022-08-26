@@ -1,15 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../Layout";
-import {
-  CardConteiner,
-  Container,
-  ScoreboardContainer,
-  FlipContainer,
-  Flipper,
-  Front,
-  Back,
-} from "./styles";
-import hand from "../../assets/hand.png";
 
 export interface ISmallTazu {
   img: string;
@@ -18,8 +7,8 @@ export interface ISmallTazu {
 const SmallTazu: React.FC<ISmallTazu> = ({ img }) => {
   return (
     <React.Fragment>
-      <img
-        width={20}
+      <img className="animate__animated animate__bounce"
+        width={40}
         src={img}
       />
     </React.Fragment>

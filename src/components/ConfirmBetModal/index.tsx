@@ -30,7 +30,7 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
         <Divider />
         <Body>
           <Row>
-            <p>Bet amount</p>
+            <p>Reward amount</p>
             <span>20 KLV</span>
           </Row>
           <Row>

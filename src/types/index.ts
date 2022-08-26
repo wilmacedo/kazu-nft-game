@@ -24,8 +24,5 @@ export interface ProviderInfo {
 }
 
 export interface Kazu {
-  frontImg: string;
-  backImg: string;
-  fliped: boolean;
-  hash: string;
+  img: string;
 }
