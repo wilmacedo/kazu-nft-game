@@ -24,14 +24,14 @@ export const ScoreboardContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 10rem;
-    height: 20rem;
+    width: 100%;
+    height: 100%;
 `;
 
 export const CardConteiner = styled(DefaultCard)`
   padding: 1rem;
-  width: 50rem;
-  height: 20rem;
+  width: 600px;
+  height: 400px;
   flex-wrap: wrap;
   display: flex;
   align-items: flex-start;
@@ -83,7 +83,7 @@ export const FlipContainer = styled.div<IFlipContainer>`
   width: 320px;  	
   height: 480px;
   padding: 1rem;
-  transform: ${(props)=> props.isActive ? 'rotateY(180deg)' : '' };
+  transform: ${(props) => props.isActive ? 'rotateY(180deg)' : ''};
   
 `
 export const Flipper = styled.div`
