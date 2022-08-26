@@ -33,10 +33,10 @@ const Kazu: React.FC<IKazu> = ({
     <Container>
       <KazuSides animation={animationState} side={currentSide}>
         <FrontSide>
-          <img src={frontImage} />
+          <img src={frontImage} width={100} height={100} />
         </FrontSide>
         <BackSide>
-          <img src={Backside} />
+          <img src={Backside} width={100} height={100} />
         </BackSide>
       </KazuSides>
     </Container>

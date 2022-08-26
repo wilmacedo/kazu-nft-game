@@ -56,11 +56,11 @@ const Header: React.FC<IHeaderMenu> = () => {
     })();
   };
 
-  useEffect(() => {
-    if (!provider.isConnected() && location.pathname !== "/") {
-      navigate("/");
-    }
-  }, [provider, location.pathname]);
+  // useEffect(() => {
+  //   if (!provider.isConnected() && location.pathname !== "/") {
+  //     navigate("/");
+  //   }
+  // }, [provider, location.pathname]);
 
   return (
     <Container>

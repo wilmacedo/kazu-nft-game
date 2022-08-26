@@ -62,8 +62,8 @@ export const KazuSides = styled.div<IKazuSides>`
   transform-style: preserve-3d;
 
   img {
-    height: 20rem;
-    width: 20rem;
+    height: 100px;
+    width: 100px;
   }
 
   transform: ${(props) => (props.side === false ? "rotateY(180deg)" : "0")};

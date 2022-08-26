@@ -9,8 +9,6 @@ import Store from "../pages/Store";
 import { useProviderData } from "../contexts/ProviderData";
 
 const AppRoutes: React.FC = () => {
-  const provider = useProviderData();
-
   return (
     <Routes>
       <Route path="/" element={<HowWork />} />
