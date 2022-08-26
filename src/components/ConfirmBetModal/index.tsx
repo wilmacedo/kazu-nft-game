@@ -14,11 +14,13 @@ import {
 interface IConfirmBetModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onConfirm: Function;
+  loading?: boolean;
 }
 
 const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
   setOpen,
   onConfirm,
+  loading,
 }) => {
   return (
     <Container>
@@ -40,8 +42,8 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
         </Body>
         <Divider />
         <Footer>
-          <Button onClick={() => onConfirm()}>
-            <span>Confirm</span>
+          <Button disabled={loading} onClick={() => onConfirm()}>
+            <span>{loading ? "Waiting confirm tx..." : "Confirm"}</span>
           </Button>
         </Footer>
       </Card>
