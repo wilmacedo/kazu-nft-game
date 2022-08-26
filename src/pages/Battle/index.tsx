@@ -3,6 +3,7 @@ import Layout from "../Layout";
 import {
   CardConteiner,
   Container,
+  ListConteiner,
   ScoreboardContainer,
 } from "./styles";
 import hand from "../../assets/hand.png";
@@ -27,90 +28,91 @@ interface Kazu {
   img: string;
 }
 export interface IEngine {
-  userKazu?: Kazu,
-  botKazu?: Kazu,
+  userKazu?: Kazu;
+  botKazu?: Kazu;
 }
 
 const Index: React.FC<IEngine> = ({
   userKazu = { img: Kazu1 },
-  botKazu = { img: Kazu2 }
+  botKazu = { img: Kazu2 },
 }) => {
-  const [battle, setBattle] = useState<IBattle>({ status: 1 })
+  const [battle, setBattle] = useState<IBattle>({ status: 1 });
   const [round, setRound] = useState<IRound>({
     userTurn: Boolean(Math.random() < 0.5),
     kazus: [userKazu, botKazu],
     bucketUser: [],
     bucketBot: [],
-    status: 1
-  })
-  const [message, setMessage] = useState<string>("Have fun!")
+    status: 1,
+  });
+  const [message, setMessage] = useState<string>("Have fun!");
 
-  const [rounds, setRounds] = useState<IRound[]>([])
+  const [rounds, setRounds] = useState<IRound[]>([]);
+  const [losg, setLogs] = useState<IRound[]>([]);
 
   useEffect(() => {
     if (round.status === 1) {
-      setMessage(round.userTurn ? "You Turn" : "Player 1 turn")
+      setMessage(round.userTurn ? "You Turn" : "Player 1 turn");
       if (!round.userTurn) {
-        tapKazus()
+        tapKazus();
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (round.status === 2) {
-      console.log('use effect next round', { ...round })
-      nextRound()
+      console.log("use effect next round", { ...round });
+      nextRound();
     }
     if (round.status === 1) {
       if (!round.userTurn) {
-        tapKazus()
+        tapKazus();
       }
     }
-  }, [round])
+  }, [round]);
 
   const nextRound = () => {
-    setRounds((prevState) => [...prevState, round])
+    setRounds((prevState) => [...prevState, round]);
     if (round.bucketBot.length === 2 || round.bucketUser.length === 2) {
-      setBattle(prevState => ({ ...prevState, status: 2 }))
-      setMessage("Battle Finished!!!")
+      setBattle((prevState) => ({ ...prevState, status: 2 }));
+      setMessage("Battle Finished!!!");
     } else {
       setRound((prevState) => {
-        let kazus = [...prevState.kazus]
-        let bucketBot = [...prevState.bucketBot]
-        let bucketUser = [...prevState.bucketUser]
+        let kazus = [...prevState.kazus];
+        let bucketBot = [...prevState.bucketBot];
+        let bucketUser = [...prevState.bucketUser];
 
         if (kazus.length === 0) {
-          kazus = [...round.bucketBot, ...round.bucketUser]
-          bucketBot = []
-          bucketUser = []
+          kazus = [...round.bucketBot, ...round.bucketUser];
+          bucketBot = [];
+          bucketUser = [];
         }
         return {
           kazus: [...kazus],
           bucketBot: [...bucketBot],
           bucketUser: [...bucketUser],
           status: 1,
-          userTurn: !prevState.userTurn
-        }
-      })
+          userTurn: !prevState.userTurn,
+        };
+      });
     }
-  }
+  };
 
   const tapKazus = () => {
-    const bucketUser: Kazu[] = [...round.bucketUser]
-    const bucketBot: Kazu[] = [...round.bucketBot]
-    let kazus: Kazu[] = [...round.kazus]
+    const bucketUser: Kazu[] = [...round.bucketUser];
+    const bucketBot: Kazu[] = [...round.bucketBot];
+    let kazus: Kazu[] = [...round.kazus];
 
     round.kazus.map((kazu: Kazu, index) => {
-      const win = Boolean(Math.random() < 0.5)
+      const win = Boolean(Math.random() < 0.5);
       if (win) {
-        kazus = kazus.filter(item => item.img !== kazu.img)
+        kazus = kazus.filter((item) => item.img !== kazu.img);
         if (round.userTurn) {
-          bucketUser.push(kazu)
+          bucketUser.push(kazu);
         } else if (!round.userTurn) {
-          bucketBot.push(kazu)
+          bucketBot.push(kazu);
         }
       }
-    })
+    });
 
     setTimeout(() => {
       setRound((prevState) => {
@@ -119,51 +121,78 @@ const Index: React.FC<IEngine> = ({
           kazus: kazus,
           bucketBot: [...bucketBot],
           bucketUser: [...bucketUser],
-          status: 2
-        }
-      })
-    }, 2500)
-  }
+          status: 2,
+        };
+      });
+    }, 2500);
+  };
 
   const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (battle.status === 1 && round.status === 1) {
-      tapKazus()
+      tapKazus();
     }
-  }
+  };
 
   return (
-    <React.Fragment>
-      <Layout>
-        <Container>
-          <Message message={message} />
-          <p style={{ color: 'white', marginTop: 10, marginBottom: 10 }}>Round #{rounds.length}</p>
+    console.log({ rounds }),
+    (
+      <React.Fragment>
+        <Layout>
+          <Container>
+            <Message message={message} />
+            <p style={{ color: "white", marginTop: 10, marginBottom: 10 }}>
+              Round #{rounds.length}
+            </p>
 
-          <CardConteiner>
-            <ScoreboardContainer>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <h1>Player 1</h1>
-                  <SmallTazuList images={round.bucketBot} />
-                </div>
+            <CardConteiner>
+              <ScoreboardContainer>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>
+                    <h1>Player 1</h1>
+                    <SmallTazuList images={round.bucketBot} />
+                  </div>
 
-                <div>
-                  <h1>User</h1>
-                  <SmallTazuList images={round.bucketUser} />
+                  <div>
+                    <h1>User</h1>
+                    <SmallTazuList images={round.bucketUser} />
+                  </div>
                 </div>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                <KazusFlipper kazus={round.kazus} />
-              </div>
-              {round.userTurn && <img src={hand} onClick={handleUserClick} />}
-            </ScoreboardContainer>
-          </CardConteiner>
-          <div>
-            <small>Log</small>
-          </div>
-        </Container>
-      </Layout>
-    </React.Fragment>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  <KazusFlipper kazus={round.kazus} />
+                </div>
+                {round.userTurn && battle.status === 1 && (
+                  <img src={hand} onClick={handleUserClick} />
+                )}
+              </ScoreboardContainer>
+            </CardConteiner>
+            <div>
+              <ul>
+                {rounds?.map((log: IRound, index) => (
+                  <li style={{ color: "#FFF" }}>
+                    {` Round: ${index + 1} ${
+                      log.userTurn ? "User" : "Player"
+                    } | 
+                    ${
+                      log.userTurn && battle.status === 1
+                        ? log.bucketUser?.length
+                        : log.bucketBot?.length
+                    }
+                    `}
+                    {/* {log.userTurn ? "User" : "Player"} |{" "}
+                    {log.userTurn && battle.status === 1
+                      ? log.bucketUser?.length
+                      : log.bucketBot?.length} */}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Container>
+        </Layout>
+      </React.Fragment>
+    )
   );
 };
 

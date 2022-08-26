@@ -27,6 +27,22 @@ export const ScoreboardContainer = styled.div`
     width: 100%;
     height: 100%;
 `;
+export const RawConteiner = styled.div`
+  display: flex;
+  gap: 0.25rem;
+`
+export const ListConteiner = styled(DefaultCard)`
+  padding: 1rem;
+  width: 600px;
+  height: 400px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  h1{
+    font-size: 16px;
+  }
+`
 
 export const CardConteiner = styled(DefaultCard)`
   padding: 1rem;
