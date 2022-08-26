@@ -10,6 +10,7 @@ import {
   Button,
   XButton,
 } from "./styles";
+import { useProviderData } from "../../contexts/ProviderData";
 
 interface IConfirmBetModal {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,13 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
   setOpen,
   onConfirm,
 }) => {
+  const provider = useProviderData();
+
+  const handlerOnConfirm = () => {
+    onConfirm();
+    provider.setTickets(provider.getTickets() - 1);
+  };
+
   return (
     <Container>
       <Card>
@@ -40,7 +48,7 @@ const ConfirmBetModal: React.FC<IConfirmBetModal> = ({
         </Body>
         <Divider />
         <Footer>
-          <Button onClick={() => onConfirm()}>
+          <Button onClick={() => handlerOnConfirm()}>
             <span>Confirm</span>
           </Button>
         </Footer>

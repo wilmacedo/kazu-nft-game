@@ -67,10 +67,14 @@ const Header: React.FC<IHeaderMenu> = () => {
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <Menu disabled={!provider.isConnected() || location.pathname.includes('/accept')} />
+      <Menu
+        disabled={
+          !provider.isConnected() || location.pathname.includes("/accept")
+        }
+      />
       {provider.isConnected() === true ? (
         <AccountContainer>
-          <p>X TIX</p>
+          <p>{provider.getTickets()} 🎫</p>
           <span>{(provider.getBalance() / 10 ** 6).toLocaleString()} KLV</span>
           <AddressContainer>
             <span>{shortenAddressSuffix(provider.getAddress())}</span>
