@@ -9,15 +9,26 @@ export const Container = styled.div`
   display: flex;
 
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const Button = styled(DefaultButton)`
   margin: unset;
   width: unset;
+
+  position: absolute;
+  right: 2rem;
+`;
+
+export const LogoContainer = styled.div`
+  position: absolute;
+  left: 2rem;
 `;
 
 export const AccountContainer = styled.div`
+  position: absolute;
+  right: 2rem;
+
   padding: 0.1rem 0 0 1.15rem;
 
   display: flex;
@@ -33,6 +44,11 @@ export const AccountContainer = styled.div`
 
   span {
     font-weight: 400;
+  }
+
+  p {
+    color: ${(props) => props.theme.white};
+    padding-right: 1rem;
   }
 `;
 

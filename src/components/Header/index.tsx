@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useProviderData } from "../../contexts/ProviderData";
 import { shortenAddressSuffix } from "../../utils";
 import Menu from "../Menu";
@@ -8,10 +8,12 @@ import {
   AccountContainer,
   AddressContainer,
   KlvIcon,
+  LogoContainer,
 } from "./styles";
 
 import { KLVIcon as KLV } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import Logo from "../Logo";
 
 interface IHeaderMenu {
   isAuthenticated?: boolean;
@@ -38,7 +40,10 @@ const Header: React.FC<IHeaderMenu> = () => {
 
         const balance = await prov.getBalance();
 
-        provider.setAddress(address);
+        // provider.setAddress(address);
+        provider.setAddress(
+          "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk"
+        );
         provider.setBalance(balance || 0);
         provider.setTickets(3);
 
@@ -51,12 +56,25 @@ const Header: React.FC<IHeaderMenu> = () => {
     })();
   };
 
+  useEffect(() => {
+    if (!provider.isConnected() && location.pathname !== "/") {
+      navigate("/");
+    }
+  }, [provider, location.pathname]);
+
   return (
     <Container>
-      <span>Logo</span>
-      <Menu disabled={!provider.isConnected()} />
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
+      <Menu
+        disabled={
+          !provider.isConnected() || location.pathname.includes("/accept")
+        }
+      />
       {provider.isConnected() === true ? (
         <AccountContainer>
+          <p>{provider.getTickets()} 🎫</p>
           <span>{(provider.getBalance() / 10 ** 6).toLocaleString()} KLV</span>
           <AddressContainer>
             <span>{shortenAddressSuffix(provider.getAddress())}</span>

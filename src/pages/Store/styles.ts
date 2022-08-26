@@ -6,12 +6,6 @@ export const Container = styled.div`
   justify-content: space-between;
   flex-direction: column;
   flex-wrap: wrap;
-
-  img {
-    align-self: center;
-    height: 20rem;
-    width: 20rem;
-  }
 `;
 
 export const Card = styled.div`

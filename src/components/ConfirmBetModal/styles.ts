@@ -1,25 +1,28 @@
-import { darken, transparentize } from "polished";
+import { Button as DefaultButton } from "../Button";
+import { darken, lighten, transparentize } from "polished";
 import styled from "styled-components";
 
-import { ConnectionStatus as ConnectionType } from "../../types";
-import { Button } from "../Button";
-
-interface IStatus {
-  status: ConnectionType;
-}
-
-interface IRow {
-  hasData: boolean;
-}
-
 export const Container = styled.div`
-  width: 30rem;
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(17, 25, 40, 0.75);
+`;
+
+export const Card = styled.div`
+  width: 22rem;
 
   display: flex;
 
   flex-direction: column;
 
-  background: ${(props) => props.theme.blur.black};
+  background: ${(props) => props.theme.black};
   border-radius: 0.6875rem;
   border: 1px solid ${(props) => props.theme.blur.white};
 `;
@@ -39,28 +42,32 @@ export const Title = styled.div`
   }
 `;
 
-export const ConnectionStatus = styled.div<IStatus>`
-  height: 1rem;
-  width: 1rem;
-
-  border-radius: 100%;
-
-  background-color: ${(props) => props.theme.status[props.status]};
+export const XButton = styled.span`
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s ease;
+  
+  &:hover {
+    color: ${(props) => lighten(0.5, props.theme.blur.white)};
+  }
 `;
+
 
 export const Body = styled.div`
   padding: 1rem;
 
   display: flex;
-
   flex-direction: column;
+
   gap: 0.5rem;
 `;
 
-export const Row = styled.div<IRow>`
+export const Row = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 0.5rem;
+  font-weight: 400;
 
   span {
     color: ${(props) => transparentize(0.15, props.theme.white)};
@@ -68,8 +75,7 @@ export const Row = styled.div<IRow>`
   }
 
   p {
-    color: ${(props) =>
-      transparentize(props.hasData ? 0 : 0.7, props.theme.white)};
+    color: ${(props) => transparentize(0.7, props.theme.white)};
   }
 `;
 
@@ -85,4 +91,8 @@ export const Footer = styled.div`
   img {
     color: red;
   }
+`;
+
+export const Button = styled(DefaultButton)`
+  margin: unset;
 `;

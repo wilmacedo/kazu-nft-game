@@ -17,6 +17,8 @@ export const Container = styled.div<IContainer>`
   align-items: center;
   gap: 0.15rem;
 
+  user-select: none;
+
   background-color: ${(props) => darken(0.25, props.theme.gray)};
 
   ${(props) =>

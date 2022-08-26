@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Option } from "./styles";
 
 interface IMenu {
@@ -6,21 +6,19 @@ interface IMenu {
 }
 
 const Menu: React.FC<IMenu> = ({ disabled }) => {
+  const navigate = useNavigate();
   const options = ["Battle", "Store", "Marketplace"];
-
-  const [selected, setSelected] = useState(options[0]);
 
   const handleClick = (index: number) => {
     if (disabled) return;
-
-    setSelected(options[index]);
+    navigate('/' + options[index].toLowerCase());
   };
 
   return (
     <Container disabled={disabled}>
       {options.map((option, index) => (
         <Option
-          selected={options[index] === selected}
+          selected={window.location.pathname.includes(option.toLowerCase())}
           key={index}
           onClick={() => handleClick(index)}
           disabled={disabled}

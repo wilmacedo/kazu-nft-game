@@ -4,12 +4,15 @@ import GlobalStyle from "./styles/global";
 
 import Routes from "./routes";
 import { DataProvider } from "./contexts/ProviderData";
+import { BrowserRouter } from "react-router-dom";
 
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <DataProvider>
-      <GlobalStyle />
-      <Routes />
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes />
+      </BrowserRouter>
     </DataProvider>
   </ThemeProvider>
 );

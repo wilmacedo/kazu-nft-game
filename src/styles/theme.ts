@@ -4,6 +4,7 @@ const theme = {
   white: "#FFF",
 
   gray: "rgba(100, 102, 147, 1)",
+  black: "rgba(17, 25, 40, 1)",
 
   blur: {
     black: "rgba(17, 25, 40, 0.5)",

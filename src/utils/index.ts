@@ -3,7 +3,7 @@ const capitalize = (string: string): string => {
 };
 
 const shortenAddress = (address: string, maxSize = 24) => {
-  if (address.length <= maxSize) {
+  if (address?.length <= maxSize) {
     return address;
   }
 
@@ -12,7 +12,7 @@ const shortenAddress = (address: string, maxSize = 24) => {
 
 const shortenAddressSuffix = (address: string, maxSize = 4) => {
   const prefix = address.substring(0, maxSize);
-  const suffix = address.substring(address.length - maxSize, address.length);
+  const suffix = address.substring(address?.length - maxSize, address?.length);
 
   return prefix + "..." + suffix;
 };
@@ -38,7 +38,7 @@ const stringToHex = (data: string) => {
 };
 const getAddress = (address: string, quantity = 15) => {
   if (address?.length > 0)
-    return `${address?.substr(0, quantity)}...${address?.slice(-3)}`;
+    return `${address?.substring(0, quantity)}...${address?.slice(-3)}`;
 };
 
 export {
