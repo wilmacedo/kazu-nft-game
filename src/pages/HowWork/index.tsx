@@ -1,6 +1,7 @@
 import { Card, Container, StepsContainer } from "./styles";
 import Layout from "../Layout";
 import React from "react";
+import Kazu from "../../components/Kazu";
 
 const HowWork: React.FC = () => {
   return (
