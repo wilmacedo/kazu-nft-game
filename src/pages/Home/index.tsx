@@ -79,6 +79,8 @@ const Home: React.FC = () => {
 
     setModalOpen(false);
     setloading(true);
+    provider.setTickets(provider.getTickets() - 1);
+
     setTimeout(() => {
       // setloading(false);
       setModalBattleAcceptedOpen(true);
