@@ -67,13 +67,13 @@ const Index: React.FC<IEngine> = ({
         bucketBot.push(kazu)
       }
     })
-    setRound((round) => { ...round, bucketBot, bucketUser, status: 2 })
+    // setRound((round) => { ...round, bucketBot, bucketUser, status: 2 })
 }
 
 const handleUserClick = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault()
 
-  setRound({})
+  // setRound({})
 }
 
 return (

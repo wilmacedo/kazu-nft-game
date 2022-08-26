@@ -22,8 +22,9 @@ const Kazu: React.FC<IKazu> = ({
       if (animationState !== '') {
         const side = animationState[1] === 'f'
         setCurrentSide(side);
+        setAnimationState('');
       }
-    }, 500)
+    }, 1400);
   }, [animationState]);
 
   return (
