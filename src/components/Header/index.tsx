@@ -40,7 +40,10 @@ const Header: React.FC<IHeaderMenu> = () => {
 
         const balance = await prov.getBalance();
 
-        provider.setAddress(address);
+        // provider.setAddress(address);
+        provider.setAddress(
+          "klv1kam6acu6avm6jvaafasx88mu80na0tgeucevw3waxzauzxhnmkestu0dmk"
+        );
         provider.setBalance(balance || 0);
         provider.setTickets(3);
 
